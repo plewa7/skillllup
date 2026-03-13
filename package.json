@@ -1,0 +1,20 @@
+{
+  "name": "design-patterns-frontend",
+  "version": "1.0.0",
+  "description": "Nauka Design Patterns z fokusem na Frontend - Vanilla TS + Vite + Playwright",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@vitejs/plugin-basic-ssl": "^1.0.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8"
+  }
+}
