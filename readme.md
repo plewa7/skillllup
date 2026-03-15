@@ -61,52 +61,27 @@ npm run test:debug       # Debug mode z krokowaniem
 
 ---
 
-## 📚 Pierwszy Wzorzec: Observer Pattern
+## 📚 Wzorce Dostępne
 
-### 🎯 Zadanie
+### 1️⃣ **Observer Pattern** - Reaktywność
+**📂 Lokalizacja:** `patterns/behavioral/observer-web-components/`
 
-Zaimplementuj **Observer Pattern** z reaktywnością:
+Zaimplementuj system notyfikacji jeden-do-wielu:
+- Pole input wysyła powiadomienia
+- Dwa komponenty nasłuchują zmian
+- Automatyczna aktualizacja DOM
 
-- **Pole input** jest `Observable` (źródłem danych)
-- **Dwa komponenty** są `Observers` (nasłuchują zmian)
-- Kiedy wpiszesz tekst → obserwatorzy się **automatycznie aktualizują**
+**Testy:** 8 testów Playwright
 
-### 📂 Lokalizacja
+### 2️⃣ **Strategy Pattern** - Kalkulatory  
+**📂 Lokalizacja:** `patterns/behavioral/strategy-price-calculator/`
 
-```
-patterns/behavioral/observer-web-components/
-├── index.html          ← Otwórz w przeglądarce
-├── solution.ts         ← TU IMPLEMENTUJESZ WZORZEC
-└── pattern.spec.ts     ← Testy Playwright
-```
+Zaimplementuj enkapsulację algorytmów:
+- Kalkulator ceny z 4 strategiami
+- Użytkownik wybiera strategię klikając
+- Dynamiczne przełączanie bez restartowania
 
-### 📝 Co Musisz Zrobić
-
-Otwórz solution.ts i zaimplementuj:
-
-1. **Klasa InputObservable**
-   - Prywatne pole: lista obserwatorów
-   - Metoda subscribe() - dodaj obserwatora do listy
-   - Metoda unsubscribe() - usuń obserwatora z listy
-   - Metoda notifyObservers() - powiadom wszystkich obserwatorów o zmianie
-   - W konstruktorze: nasłuchuj 'input' event na inputElement
-
-2. **Klasy ObserverComponent1 i ObserverComponent2**
-   - Implementuj interfejs Observer
-   - Metoda update(data: string) -> zaktualizuj element.textContent
-
-3. **Inicjalizacja w DOMContentLoaded**
-   - Stwórz instancję InputObservable
-   - Stwórz instancje komponentów
-   - Zarejestruj obserwatorów via subscribe()
-
-### ✅ Jak Sprawdzić
-
-```bash
-npm run test
-```
-
-Powinno być 8 testów - wszystkie będą failować do czasu implementacji.
+**Testy:** 10 testów Playwright
 
 ---
 
