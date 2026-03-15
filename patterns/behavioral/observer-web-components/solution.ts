@@ -28,31 +28,66 @@ class InputObservable {
   // Tutaj przechowuj referencje do obserwatorów
   // ZAIMPLEMENTUJ: Dodaj private pole do przechowywania obserwatorów
 
+  private obserwators: Observer[] =
+    [];
+
   constructor(
     private inputElement: HTMLInputElement,
   ) {
     // ZAIMPLEMENTUJ:
     // 1. Nasłuchuj zmian na inputElement (event 'input')
     // 2. Na każdą zmianę, powiadom wszystkich obserwatorów
+    this.inputElement.addEventListener(
+      "input",
+      () => {
+        const value =
+          this.getValue();
+        this.notifyObservers(
+          value,
+        );
+      },
+    );
   }
 
   // ZAIMPLEMENTUJ: Metoda subscribe
   // Powinna dodać obserwatora do listy
   subscribe(
     observer: Observer,
-  ): void {}
+  ): void {
+    this.obserwators.push(
+      observer,
+    );
+  }
 
   // ZAIMPLEMENTUJ: Metoda unsubscribe
   // Powinna usunąć obserwatora z listy
   unsubscribe(
     observer: Observer,
-  ): void {}
+  ): void {
+    this.obserwators =
+      this.obserwators.filter(
+        (
+          obs,
+        ) =>
+          obs !==
+          observer,
+      );
+  }
 
   // ZAIMPLEMENTUJ: Metoda notifyObservers
   // Powinna wywołać update() na każdego obserwatora
   private notifyObservers(
     data: string,
-  ): void {}
+  ): void {
+    this.obserwators.forEach(
+      (
+        obs,
+      ) =>
+        obs.update(
+          data,
+        ),
+    );
+  }
 
   // Helper do pobrania bieżącej wartości inputu
   getValue(): string {
@@ -68,25 +103,36 @@ class InputObservable {
 class ObserverComponent1 implements Observer {
   constructor(
     private element: HTMLElement,
-  ) {}
+  ) {
+    this.element.textContent =
+      "oczekuje danych...";
+  }
 
   // ZAIMPLEMENTUJ: Metoda update
   // Powinna zaktualizować zawartość element.textContent
   update(
     data: string,
-  ): void {}
+  ): void {
+    this.element.textContent =
+      data;
+  }
 }
 
 class ObserverComponent2 implements Observer {
   constructor(
     private element: HTMLElement,
-  ) {}
+  ) { 
+    this.element.textContent =
+      "oczekuje danych...";
+  }
 
   // ZAIMPLEMENTUJ: Metoda update
   // Powinna zaktualizować zawartość element.textContent
   update(
     data: string,
-  ): void {}
+  ): void {
+    this.element.textContent = data;
+  }
 }
 
 // ============================================
@@ -115,10 +161,23 @@ document.addEventListener(
     // 3. Zarejestruj obserwatorów Subscribe
 
     // Przykład struktury (zastąp polami):
-    // const observable = new InputObservable(inputElement);
-    // const component1 = new ObserverComponent1(observer1Element);
-    // const component2 = new ObserverComponent2(observer2Element);
-    // observable.subscribe(component1);
-    // observable.subscribe(component2);
+    const observable =
+      new InputObservable(
+        inputElement,
+      );
+    const component1 =
+      new ObserverComponent1(
+        observer1Element,
+      );
+    const component2 =
+      new ObserverComponent2(
+        observer2Element,
+      );
+    observable.subscribe(
+      component1,
+    );
+    observable.subscribe(
+      component2,
+    );
   },
 );
