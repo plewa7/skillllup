@@ -12,11 +12,11 @@ Każdy wzorzec jest zaimplementowany jako **mini-aplikacja UI** z **testami Play
 skillllup/
 ├── patterns/                          # Wzorce projektowe
 │   ├── behavioral/                    # Wzorce behawioralne
-│   │   └── observer-web-components/   # Observer Pattern
-│   │       ├── index.html             # UI do wizualizacji wzorca
-│   │       ├── solution.ts            # Miejsce na Twoją implementację
-│   │       └── pattern.spec.ts        # Testy Playwright
-│   └── (więcej kategorii i wzorców)
+│   │   ├── observer-web-components/   # Observer Pattern
+│   │   ├── strategy-price-calculator/ # Strategy Pattern
+│   │   └── state-traffic-light/       # State Pattern
+│   └── creational/                    # Wzorce kreacyjne
+│       └── factory-shape-generator/   # Factory Pattern
 ├── src/                               # Kod wspólny (utilities, helpers)
 ├── tests/                             # Konfiguracja testów
 ├── package.json                       # Skrypty i zależności
@@ -86,6 +86,30 @@ Zaimplementuj enkapsulację algorytmów:
 - Dynamiczne przełączanie bez restartowania
 
 **Testy:** 10 testów Playwright
+
+### 3️⃣ **State Pattern** - Sygnalizacja Świetlna
+
+**📂 Lokalizacja:** `patterns/behavioral/state-traffic-light/`
+
+Zaimplementuj zmianę zachowania w zależności od stanu:
+
+- Sygnalizacja świetlna ze stanami (Red → Yellow → Green)
+- Każdy stan ma własną logikę i czas trwania
+- Automatyczne przechodzenie między stanami
+
+**Testy:** 8 testów Playwright
+
+### 4️⃣ **Factory Pattern** - Generatory Kształtów
+
+**📂 Lokalizacja:** `patterns/creational/factory-shape-generator/`
+
+Zaimplementuj enkapsulację tworzenia obiektów:
+
+- Fabryka do tworzenia kształtów (Circle, Square, Triangle)
+- Dynamiczne liczniki dla każdego typu
+- Zarządzanie kolekcją obiektów
+
+**Testy:** 13 testów Playwright
 
 ---
 
