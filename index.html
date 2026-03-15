@@ -1,22 +1,9 @@
 <!doctype html>
-<html
-  lang="pl"
->
+<html lang="pl">
   <head>
-    <meta
-      charset="UTF-8"
-    />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
-    <title>
-      Design
-      Patterns
-      Frontend
-      Learning
-      Lab
-    </title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design Patterns Frontend Learning Lab</title>
     <style>
       * {
         margin: 0;
@@ -25,19 +12,8 @@
       }
 
       body {
-        font-family:
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          sans-serif;
-        background: linear-gradient(
-          135deg,
-          #667eea
-            0%,
-          #764ba2
-            100%
-        );
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
         display: flex;
         align-items: center;
@@ -48,15 +24,7 @@
       .container {
         background: white;
         border-radius: 16px;
-        box-shadow: 0
-          20px
-          60px
-          rgba(
-            0,
-            0,
-            0,
-            0.3
-          );
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         padding: 50px;
         max-width: 800px;
         width: 100%;
@@ -92,15 +60,11 @@
         padding: 15px;
         margin-bottom: 15px;
         background: #f9f9f9;
-        border: 2px
-          solid
-          #e0e0e0;
+        border: 2px solid #e0e0e0;
         border-radius: 8px;
         text-decoration: none;
         color: #333;
-        transition: all
-          0.3s
-          ease;
+        transition: all 0.3s ease;
         font-weight: 600;
       }
 
@@ -108,9 +72,7 @@
         background: #667eea;
         color: white;
         border-color: #667eea;
-        transform: translateX(
-          5px
-        );
+        transform: translateX(5px);
       }
 
       .category {
@@ -128,203 +90,69 @@
 
       .setup-guide {
         background: #e8f5e9;
-        border: 2px
-          solid
-          #4caf50;
+        border: 2px solid #4caf50;
         padding: 20px;
         border-radius: 8px;
         margin-bottom: 30px;
       }
 
-      .setup-guide
-        h3 {
+      .setup-guide h3 {
         color: #2e7d32;
         margin-bottom: 15px;
       }
 
-      .setup-guide
-        code {
+      .setup-guide code {
         background: white;
-        padding: 8px
-          12px;
+        padding: 8px 12px;
         border-radius: 4px;
-        font-family:
-          "Courier New",
-          monospace;
+        font-family: 'Courier New', monospace;
         display: block;
-        margin: 10px
-          0;
+        margin: 10px 0;
         color: #333;
       }
     </style>
   </head>
   <body>
-    <div
-      class="container"
-    >
-      <h1>
-        🎓
-        Design
-        Patterns
-        Frontend
-      </h1>
-      <p
-        class="subtitle"
-      >
-        Nauka
-        wzorców
-        projektowych
-        z
-        testowaniem
-        Playwright
-      </p>
+    <div class="container">
+      <h1>🎓 Design Patterns Frontend</h1>
+      <p class="subtitle">Nauka wzorców projektowych z testowaniem Playwright</p>
 
-      <div
-        class="setup-guide"
-      >
-        <h3>
-          🚀
-          Quick
-          Start
-        </h3>
-        <code
-          >npm
-          install</code
-        >
-        <code
-          >npm
-          run
-          dev</code
-        >
-        <p
-          style="
-            margin-top: 10px;
-            font-size: 14px;
-          "
-        >
-          Serwer
-          uruchomi
-          się
-          na
-          http://localhost:5173
+      <div class="setup-guide">
+        <h3>🚀 Quick Start</h3>
+        <code>npm install</code>
+        <code>npm run dev</code>
+        <p style="margin-top: 10px; font-size: 14px">
+          Serwer uruchomi się na http://localhost:5173
         </p>
       </div>
 
-      <div
-        class="description"
-      >
-        Każdy
-        wzorzec
-        jest
-        mini-aplikacją
-        UI
-        z
-        testami
-        Playwright,
-        które
-        sprawdzają
-        poprawność
-        implementacji.
-        Testy
-        będą
-        failować
-        dopóki
-        nie
-        zaimplementujesz
-        wzorca!
-        🎯
+      <div class="description">
+        Każdy wzorzec jest mini-aplikacją UI z testami Playwright, które sprawdzają poprawność
+        implementacji. Testy będą failować dopóki nie zaimplementujesz wzorca! 🎯
       </div>
 
-      <div
-        class="patterns"
-      >
-        <div
-          class="category"
-        >
-          <div
-            class="category-title"
+      <div class="patterns">
+        <div class="category">
+          <div class="category-title">📚 Behawioralne (Behavioral)</div>
+          <a href="/patterns/behavioral/observer-web-components/index.html" class="pattern-link"
+            >👁️ Observer Pattern - Reaktywność</a
           >
-            📚
-            Behawioralne
-            (Behavioral)
-          </div>
-          <a
-            href="/patterns/behavioral/observer-web-components/index.html"
-            class="pattern-link"
-            >👁️
-            Observer
-            Pattern
-            -
-            Reaktywność</a
-          >
-          <a
-            href="/patterns/behavioral/strategy-price-calculator/index.html"
-            class="pattern-link"
-            >💰
-            Strategy
-            Pattern
-            -
-            Kalkulatory</a
+          <a href="/patterns/behavioral/strategy-price-calculator/index.html" class="pattern-link"
+            >💰 Strategy Pattern - Kalkulatory</a
           >
         </div>
 
-        <div
-          class="category"
-        >
-          <div
-            class="category-title"
-          >
-            ⚙️
-            Strukturalne
-            (Structural)
-            -
-            Coming
-            Soon
-          </div>
-          <span
-            style="
-              color: #ccc;
-              display: block;
-              padding: 15px;
-            "
-          >
-            Adapter
-            |
-            Decorator
-            |
-            Factory
-            |
-            Singleton
+        <div class="category">
+          <div class="category-title">⚙️ Strukturalne (Structural) - Coming Soon</div>
+          <span style="color: #ccc; display: block; padding: 15px">
+            Adapter | Decorator | Factory | Singleton
           </span>
         </div>
 
-        <div
-          class="category"
-        >
-          <div
-            class="category-title"
-          >
-            🏗️
-            Kreacyjne
-            (Creational)
-            -
-            Coming
-            Soon
-          </div>
-          <span
-            style="
-              color: #ccc;
-              display: block;
-              padding: 15px;
-            "
-          >
-            Factory
-            |
-            Singleton
-            |
-            Builder
-            |
-            Prototype
+        <div class="category">
+          <div class="category-title">🏗️ Kreacyjne (Creational) - Coming Soon</div>
+          <span style="color: #ccc; display: block; padding: 15px">
+            Factory | Singleton | Builder | Prototype
           </span>
         </div>
       </div>
@@ -333,22 +161,12 @@
         style="
           margin-top: 40px;
           padding-top: 20px;
-          border-top: 1px
-            solid
-            #e0e0e0;
+          border-top: 1px solid #e0e0e0;
           font-size: 14px;
           color: #999;
         "
       >
-        Stack:
-        Vanilla
-        TypeScript
-        •
-        Vite
-        •
-        Playwright
-        •
-        HTML/CSS
+        Stack: Vanilla TypeScript • Vite • Playwright • HTML/CSS
       </div>
     </div>
   </body>

@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "strict": true,
@@ -18,18 +14,9 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@patterns/*": [
-        "patterns/*"
-      ]
+      "@/*": ["src/*"],
+      "@patterns/*": ["patterns/*"]
     }
   },
-  "include": [
-    "src",
-    "patterns",
-    "vite.config.ts",
-    "playwright.config.ts"
-  ]
+  "include": ["src", "patterns", "vite.config.ts", "playwright.config.ts"]
 }

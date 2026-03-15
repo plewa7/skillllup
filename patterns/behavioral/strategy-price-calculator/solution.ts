@@ -21,9 +21,7 @@
 interface PricingStrategy {
   // ZAIMPLEMENTUJ: Metoda calculate przyjmuje cenę bazową
   // ZAIMPLEMENTUJ: Zwraca obliczoną cenę
-  calculate(
-    basePrice: number,
-  ): number;
+  calculate(basePrice: number): number;
 
   // ZAIMPLEMENTUJ: Zwraca nazwę strategii (do wyświetlenia)
   getName(): string;
@@ -35,56 +33,56 @@ interface PricingStrategy {
 // ZAIMPLEMENTUJ: RegularPricingStrategy
 // Powinna zwracać cenę bez zmian: basePrice
 class RegularPricingStrategy implements PricingStrategy {
-  calculate(
-    basePrice: number,
-  ): number {
+  calculate(basePrice: number): number {
     // ZAIMPLEMENTUJ
+    return basePrice;
   }
 
   getName(): string {
     // ZAIMPLEMENTUJ
+    return 'Zwykła Cena';
   }
 }
 
 // ZAIMPLEMENTUJ: DiscountPricingStrategy
 // Powinna zwracać cenę ze zniżką 20%: basePrice * 0.8
 class DiscountPricingStrategy implements PricingStrategy {
-  calculate(
-    basePrice: number,
-  ): number {
+  calculate(basePrice: number): number {
     // ZAIMPLEMENTUJ
+    return basePrice * 0.8;
   }
 
   getName(): string {
     // ZAIMPLEMENTUJ
+    return 'Ze Zniżką 20%';
   }
 }
 
 // ZAIMPLEMENTUJ: TaxPricingStrategy
 // Powinna zwracać cenę z VAT 23%: basePrice * 1.23
 class TaxPricingStrategy implements PricingStrategy {
-  calculate(
-    basePrice: number,
-  ): number {
+  calculate(basePrice: number): number {
     // ZAIMPLEMENTUJ
+    return basePrice * 1.23;
   }
 
   getName(): string {
     // ZAIMPLEMENTUJ
+    return 'Cena z VAT 23%';
   }
 }
 
 // ZAIMPLEMENTUJ: PremiumPricingStrategy
 // Powinna zwracać cenę premium +50%: basePrice * 1.5
 class PremiumPricingStrategy implements PricingStrategy {
-  calculate(
-    basePrice: number,
-  ): number {
+  calculate(basePrice: number): number {
     // ZAIMPLEMENTUJ
+    return basePrice * 1.5;
   }
 
   getName(): string {
     // ZAIMPLEMENTUJ
+    return 'Cena Premium +50%';
   }
 }
 
@@ -95,76 +93,100 @@ class PriceCalculator {
   // ZAIMPLEMENTUJ: Prywatne pole na aktualną strategię
   // private strategy: PricingStrategy;
 
+  private strategy: PricingStrategy;
+
   constructor(
     private basePrice: number,
     private resultElement: HTMLElement,
-    private breakdownElement: HTMLElement,
+    private breakdownElement: HTMLElement
   ) {
     // ZAIMPLEMENTUJ: Ustaw domyślną strategię na RegularPricingStrategy
+    this.strategy = new RegularPricingStrategy();
   }
 
   // ZAIMPLEMENTUJ: Metoda setStrategy
   // Zmienia strategię i przelicza wynik
-  setStrategy(
-    strategy: PricingStrategy,
-  ): void {
+  setStrategy(strategy: PricingStrategy): void {
     // ZAIMPLEMENTUJ:
     // 1. Ustaw nową strategię
     // 2. Przelicz wynik via calculate()
+    this.strategy = strategy;
+    this.calculate();
   }
 
   // ZAIMPLEMENTUJ: Metoda setBasePrice
   // Zmienia cenę bazową i przelicza wynik
-  setBasePrice(
-    price: number,
-  ): void {
+  setBasePrice(price: number): void {
     // ZAIMPLEMENTUJ:
     // 1. Ustaw nową cenę
     // 2. Przelicz wynik
+    this.basePrice = price;
+    this.calculate();
   }
 
   // ZAIMPLEMENTUJ: Metoda calculate
   // Oblicza cenę za pomocą aktualnej strategii
   private calculate(): void {
     // ZAIMPLEMENTUJ:
-    // 1. Oblicz nową cenę: this.strategy.calculate(this.basePrice)
-    // 2. Sformatuj do 2 miejsc po przecinku
-    // 3. Zaktualizuj resultElement.textContent
     // Formatowanie: (123.456).toFixed(2) = "123.46"
     // Wynik powinien być: "123,46 zł" (zł zamiast .)
-    // Zaktualizuj breakdownElement z nazwą strategii
+    // 1. Oblicz nową cenę: this.strategy.calculate(this.basePrice)
+    const calculatedPrice = this.strategy.calculate(this.basePrice);
+
+    // 2. Sformatuj do 2 miejsc po przecinku
+    const formattedPrice = calculatedPrice.toFixed(2).replace('.', ',') + ' zł';
+    // 3. Zaktualizuj resultElement.textContent
+    this.resultElement.textContent = formattedPrice;
+    // Zaktualizuj breakdownElement - znajdź inner element z current-strategy
+    const strategyElement = this.breakdownElement.querySelector('[data-testid="current-strategy"]');
+    if (strategyElement) {
+      strategyElement.textContent = this.strategy.getName();
+    }
   }
 }
 
 // ============================================
 // 4. INICJALIZACJA APLIKACJI
 // ============================================
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-    // Pobierz elementy z DOM
-    const basePriceInput =
-      document.getElementById(
-        "basePrice",
-      ) as HTMLInputElement;
-    const resultElement =
-      document.querySelector(
-        '[data-testid="result-value"]',
-      ) as HTMLElement;
-    const breakdownElement =
-      document.querySelector(
-        '[data-testid="result-breakdown"]',
-      ) as HTMLElement;
-    const strategyCards =
-      document.querySelectorAll(
-        ".strategy-card",
-      ) as NodeListOf<HTMLElement>;
+document.addEventListener('DOMContentLoaded', () => {
+  // Pobierz elementy z DOM
+  const basePriceInput = document.getElementById('basePrice') as HTMLInputElement;
+  const resultElement = document.querySelector('[data-testid="result-value"]') as HTMLElement;
+  const breakdownElement = document.querySelector(
+    '[data-testid="result-breakdown"]'
+  ) as HTMLElement;
+  const strategyCards = document.querySelectorAll('.strategy-card') as NodeListOf<HTMLElement>;
 
-    // ZAIMPLEMENTUJ:
-    // 1. Stwórz instancję PriceCalculator z wartością z input'u
-    // 2. Stwórz mapy strategii: { regular: new Regular..., discount: new Discount..., itd }
-    // 3. Nasłuchuj kliknięć na karty strategii
-    // 4. Nasłuchuj zmian w input'ie (zmiana ceny bazowej)
-    // 5. Zaktualizuj UI
-  },
-);
+  const calculator = new PriceCalculator(
+    parseFloat(basePriceInput.value) || 0,
+    resultElement,
+    breakdownElement
+  );
+  const stragiesMap: { [key: string]: PricingStrategy } = {
+    regular: new RegularPricingStrategy(),
+    discount: new DiscountPricingStrategy(),
+    tax: new TaxPricingStrategy(),
+    premium: new PremiumPricingStrategy(),
+  };
+
+  strategyCards.forEach((card) => {
+    card.addEventListener('click', () => {
+      const strategyKey = card.getAttribute('data-strategy');
+      if (strategyKey && stragiesMap[strategyKey]) {
+        calculator.setStrategy(stragiesMap[strategyKey]);
+
+        // Aktualizuj klasę active na kartach
+        strategyCards.forEach((c) => c.classList.remove('active'));
+        card.classList.add('active');
+      }
+    });
+  });
+
+  basePriceInput.addEventListener('input', () => {
+    const price = parseFloat(basePriceInput.value) || 0;
+    calculator.setBasePrice(price);
+  });
+
+  // Inicjalna kalkulacja
+  calculator.setBasePrice(parseFloat(basePriceInput.value) || 0);
+});
