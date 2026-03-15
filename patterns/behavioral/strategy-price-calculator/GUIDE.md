@@ -46,7 +46,9 @@ Użytkownik wybiera strategię klikając kafel → cena się przelicza!
 
 ```typescript
 class RegularPricingStrategy implements PricingStrategy {
-  calculate(basePrice: number): number {
+  calculate(
+    basePrice: number,
+  ): number {
     // TODO: return basePrice
   }
 
@@ -56,7 +58,9 @@ class RegularPricingStrategy implements PricingStrategy {
 }
 
 class DiscountPricingStrategy implements PricingStrategy {
-  calculate(basePrice: number): number {
+  calculate(
+    basePrice: number,
+  ): number {
     // TODO: return basePrice * 0.8
   }
 
@@ -66,7 +70,9 @@ class DiscountPricingStrategy implements PricingStrategy {
 }
 
 class TaxPricingStrategy implements PricingStrategy {
-  calculate(basePrice: number): number {
+  calculate(
+    basePrice: number,
+  ): number {
     // TODO: return basePrice * 1.23
   }
 
@@ -76,7 +82,9 @@ class TaxPricingStrategy implements PricingStrategy {
 }
 
 class PremiumPricingStrategy implements PricingStrategy {
-  calculate(basePrice: number): number {
+  calculate(
+    basePrice: number,
+  ): number {
     // TODO: return basePrice * 1.5
   }
 
@@ -92,23 +100,37 @@ class PremiumPricingStrategy implements PricingStrategy {
 class PriceCalculator {
   private strategy: PricingStrategy;
 
-  constructor(basePrice: number, resultElement: HTMLElement, breakdownElement: HTMLElement) {
-    this.basePrice = basePrice;
-    this.resultElement = resultElement;
-    this.breakdownElement = breakdownElement;
-    
+  constructor(
+    basePrice: number,
+    resultElement: HTMLElement,
+    breakdownElement: HTMLElement,
+  ) {
+    this.basePrice =
+      basePrice;
+    this.resultElement =
+      resultElement;
+    this.breakdownElement =
+      breakdownElement;
+
     // Ustaw domyślną strategię
-    this.strategy = new RegularPricingStrategy();
+    this.strategy =
+      new RegularPricingStrategy();
     this.calculate();
   }
 
-  setStrategy(strategy: PricingStrategy): void {
-    this.strategy = strategy;
+  setStrategy(
+    strategy: PricingStrategy,
+  ): void {
+    this.strategy =
+      strategy;
     this.calculate();
   }
 
-  setBasePrice(price: number): void {
-    this.basePrice = price;
+  setBasePrice(
+    price: number,
+  ): void {
+    this.basePrice =
+      price;
     this.calculate();
   }
 
@@ -124,48 +146,102 @@ class PriceCalculator {
 ### Część 3: Inicjalizacja i Event Handlers
 
 ```typescript
-document.addEventListener("DOMContentLoaded", () => {
-  // Pobierz elementy
-  const basePriceInput = document.getElementById("basePrice") as HTMLInputElement;
-  const resultElement = document.querySelector('[data-testid="result-value"]');
-  const breakdownElement = document.querySelector('[data-testid="result-breakdown"]');
-  const strategyCards = document.querySelectorAll(".strategy-card");
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    // Pobierz elementy
+    const basePriceInput =
+      document.getElementById(
+        "basePrice",
+      ) as HTMLInputElement;
+    const resultElement =
+      document.querySelector(
+        '[data-testid="result-value"]',
+      );
+    const breakdownElement =
+      document.querySelector(
+        '[data-testid="result-breakdown"]',
+      );
+    const strategyCards =
+      document.querySelectorAll(
+        ".strategy-card",
+      );
 
-  // Stwórz kalkulator
-  const calculator = new PriceCalculator(
-    parseInt(basePriceInput.value),
-    resultElement,
-    breakdownElement
-  );
+    // Stwórz kalkulator
+    const calculator =
+      new PriceCalculator(
+        parseInt(
+          basePriceInput.value,
+        ),
+        resultElement,
+        breakdownElement,
+      );
 
-  // Stwórz mapę strategii
-  const strategies = {
-    regular: new RegularPricingStrategy(),
-    discount: new DiscountPricingStrategy(),
-    tax: new TaxPricingStrategy(),
-    premium: new PremiumPricingStrategy(),
-  };
+    // Stwórz mapę strategii
+    const strategies =
+      {
+        regular:
+          new RegularPricingStrategy(),
+        discount:
+          new DiscountPricingStrategy(),
+        tax: new TaxPricingStrategy(),
+        premium:
+          new PremiumPricingStrategy(),
+      };
 
-  // Nasłuchuj kliknięć na karty
-  strategyCards.forEach((card) => {
-    card.addEventListener("click", () => {
-      const strategyKey = card.getAttribute("data-strategy");
-      const strategy = strategies[strategyKey];
+    // Nasłuchuj kliknięć na karty
+    strategyCards.forEach(
+      (
+        card,
+      ) => {
+        card.addEventListener(
+          "click",
+          () => {
+            const strategyKey =
+              card.getAttribute(
+                "data-strategy",
+              );
+            const strategy =
+              strategies[
+                strategyKey
+              ];
 
-      // Zmień strategię
-      calculator.setStrategy(strategy);
+            // Zmień strategię
+            calculator.setStrategy(
+              strategy,
+            );
 
-      // Aktualizuj UI (dodaj/usuń klasę active)
-      strategyCards.forEach((c) => c.classList.remove("active"));
-      card.classList.add("active");
-    });
-  });
+            // Aktualizuj UI (dodaj/usuń klasę active)
+            strategyCards.forEach(
+              (
+                c,
+              ) =>
+                c.classList.remove(
+                  "active",
+                ),
+            );
+            card.classList.add(
+              "active",
+            );
+          },
+        );
+      },
+    );
 
-  // Nasłuchuj zmian ceny
-  basePriceInput.addEventListener("input", () => {
-    calculator.setBasePrice(parseInt(basePriceInput.value) || 0);
-  });
-});
+    // Nasłuchuj zmian ceny
+    basePriceInput.addEventListener(
+      "input",
+      () => {
+        calculator.setBasePrice(
+          parseInt(
+            basePriceInput.value,
+          ) ||
+            0,
+        );
+      },
+    );
+  },
+);
 ```
 
 ## ✅ Jak Testować
@@ -187,6 +263,7 @@ npm run dev
 Przejdź na: `http://localhost:5173/patterns/behavioral/strategy-price-calculator/index.html`
 
 Ręcznie testuj:
+
 1. Zmień cenę w input'ie
 2. Kliknij na różne karty strategii
 3. Obserwuj jak wynik się zmienia!
@@ -209,6 +286,7 @@ Ręcznie testuj:
 ## 🎓 Lekcja do Zapamiętania
 
 **Strategy Pattern jest super ważny bo:**
+
 - ✅ **Open/Closed Principle** - otwarty na nowe strategie, zamknięty na modyfikacje
 - ✅ **Eliminuje if/else** - zamiast `if (type === 'discount') { ... }` mamy obiekty
 - ✅ **Runtime flexibility** - zmiana strategii bez restartowania aplikacji
@@ -216,12 +294,12 @@ Ręcznie testuj:
 
 ## 📚 Różnica vs Observer Pattern
 
-| Observer | Strategy |
-|----------|----------|
+| Observer                                       | Strategy                                    |
+| ---------------------------------------------- | ------------------------------------------- |
 | **Notyfikacja** - Subject powiadamia Observers | **Enkapsulacja** - Context wybiera algorytm |
-| One-to-many | One-to-one (context ma jedną strategię) |
-| Asynchronous update | Synchronous compute |
-| "Powiedz mi gdy coś się zmieni" | "Oblicz to dla mnie tym sposobem" |
+| One-to-many                                    | One-to-one (context ma jedną strategię)     |
+| Asynchronous update                            | Synchronous compute                         |
+| "Powiedz mi gdy coś się zmieni"                | "Oblicz to dla mnie tym sposobem"           |
 
 ---
 

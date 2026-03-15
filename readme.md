@@ -64,19 +64,23 @@ npm run test:debug       # Debug mode z krokowaniem
 ## 📚 Wzorce Dostępne
 
 ### 1️⃣ **Observer Pattern** - Reaktywność
+
 **📂 Lokalizacja:** `patterns/behavioral/observer-web-components/`
 
 Zaimplementuj system notyfikacji jeden-do-wielu:
+
 - Pole input wysyła powiadomienia
 - Dwa komponenty nasłuchują zmian
 - Automatyczna aktualizacja DOM
 
 **Testy:** 8 testów Playwright
 
-### 2️⃣ **Strategy Pattern** - Kalkulatory  
+### 2️⃣ **Strategy Pattern** - Kalkulatory
+
 **📂 Lokalizacja:** `patterns/behavioral/strategy-price-calculator/`
 
 Zaimplementuj enkapsulację algorytmów:
+
 - Kalkulator ceny z 4 strategiami
 - Użytkownik wybiera strategię klikając
 - Dynamiczne przełączanie bez restartowania

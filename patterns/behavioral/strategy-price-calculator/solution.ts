@@ -21,7 +21,9 @@
 interface PricingStrategy {
   // ZAIMPLEMENTUJ: Metoda calculate przyjmuje cenę bazową
   // ZAIMPLEMENTUJ: Zwraca obliczoną cenę
-  calculate(basePrice: number): number;
+  calculate(
+    basePrice: number,
+  ): number;
 
   // ZAIMPLEMENTUJ: Zwraca nazwę strategii (do wyświetlenia)
   getName(): string;
@@ -33,7 +35,9 @@ interface PricingStrategy {
 // ZAIMPLEMENTUJ: RegularPricingStrategy
 // Powinna zwracać cenę bez zmian: basePrice
 class RegularPricingStrategy implements PricingStrategy {
-  calculate(basePrice: number): number {
+  calculate(
+    basePrice: number,
+  ): number {
     // ZAIMPLEMENTUJ
   }
 
@@ -45,7 +49,9 @@ class RegularPricingStrategy implements PricingStrategy {
 // ZAIMPLEMENTUJ: DiscountPricingStrategy
 // Powinna zwracać cenę ze zniżką 20%: basePrice * 0.8
 class DiscountPricingStrategy implements PricingStrategy {
-  calculate(basePrice: number): number {
+  calculate(
+    basePrice: number,
+  ): number {
     // ZAIMPLEMENTUJ
   }
 
@@ -57,7 +63,9 @@ class DiscountPricingStrategy implements PricingStrategy {
 // ZAIMPLEMENTUJ: TaxPricingStrategy
 // Powinna zwracać cenę z VAT 23%: basePrice * 1.23
 class TaxPricingStrategy implements PricingStrategy {
-  calculate(basePrice: number): number {
+  calculate(
+    basePrice: number,
+  ): number {
     // ZAIMPLEMENTUJ
   }
 
@@ -69,7 +77,9 @@ class TaxPricingStrategy implements PricingStrategy {
 // ZAIMPLEMENTUJ: PremiumPricingStrategy
 // Powinna zwracać cenę premium +50%: basePrice * 1.5
 class PremiumPricingStrategy implements PricingStrategy {
-  calculate(basePrice: number): number {
+  calculate(
+    basePrice: number,
+  ): number {
     // ZAIMPLEMENTUJ
   }
 
@@ -95,7 +105,9 @@ class PriceCalculator {
 
   // ZAIMPLEMENTUJ: Metoda setStrategy
   // Zmienia strategię i przelicza wynik
-  setStrategy(strategy: PricingStrategy): void {
+  setStrategy(
+    strategy: PricingStrategy,
+  ): void {
     // ZAIMPLEMENTUJ:
     // 1. Ustaw nową strategię
     // 2. Przelicz wynik via calculate()
@@ -103,7 +115,9 @@ class PriceCalculator {
 
   // ZAIMPLEMENTUJ: Metoda setBasePrice
   // Zmienia cenę bazową i przelicza wynik
-  setBasePrice(price: number): void {
+  setBasePrice(
+    price: number,
+  ): void {
     // ZAIMPLEMENTUJ:
     // 1. Ustaw nową cenę
     // 2. Przelicz wynik
@@ -116,10 +130,8 @@ class PriceCalculator {
     // 1. Oblicz nową cenę: this.strategy.calculate(this.basePrice)
     // 2. Sformatuj do 2 miejsc po przecinku
     // 3. Zaktualizuj resultElement.textContent
-
     // Formatowanie: (123.456).toFixed(2) = "123.46"
     // Wynik powinien być: "123,46 zł" (zł zamiast .)
-
     // Zaktualizuj breakdownElement z nazwą strategii
   }
 }
@@ -127,25 +139,32 @@ class PriceCalculator {
 // ============================================
 // 4. INICJALIZACJA APLIKACJI
 // ============================================
-document.addEventListener("DOMContentLoaded", () => {
-  // Pobierz elementy z DOM
-  const basePriceInput = document.getElementById(
-    "basePrice",
-  ) as HTMLInputElement;
-  const resultElement = document.querySelector(
-    '[data-testid="result-value"]',
-  ) as HTMLElement;
-  const breakdownElement = document.querySelector(
-    '[data-testid="result-breakdown"]',
-  ) as HTMLElement;
-  const strategyCards = document.querySelectorAll(
-    ".strategy-card",
-  ) as NodeListOf<HTMLElement>;
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    // Pobierz elementy z DOM
+    const basePriceInput =
+      document.getElementById(
+        "basePrice",
+      ) as HTMLInputElement;
+    const resultElement =
+      document.querySelector(
+        '[data-testid="result-value"]',
+      ) as HTMLElement;
+    const breakdownElement =
+      document.querySelector(
+        '[data-testid="result-breakdown"]',
+      ) as HTMLElement;
+    const strategyCards =
+      document.querySelectorAll(
+        ".strategy-card",
+      ) as NodeListOf<HTMLElement>;
 
-  // ZAIMPLEMENTUJ:
-  // 1. Stwórz instancję PriceCalculator z wartością z input'u
-  // 2. Stwórz mapy strategii: { regular: new Regular..., discount: new Discount..., itd }
-  // 3. Nasłuchuj kliknięć na karty strategii
-  // 4. Nasłuchuj zmian w input'ie (zmiana ceny bazowej)
-  // 5. Zaktualizuj UI
-});
+    // ZAIMPLEMENTUJ:
+    // 1. Stwórz instancję PriceCalculator z wartością z input'u
+    // 2. Stwórz mapy strategii: { regular: new Regular..., discount: new Discount..., itd }
+    // 3. Nasłuchuj kliknięć na karty strategii
+    // 4. Nasłuchuj zmian w input'ie (zmiana ceny bazowej)
+    // 5. Zaktualizuj UI
+  },
+);
