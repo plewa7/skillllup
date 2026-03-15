@@ -37,9 +37,7 @@ Gdy jeden obiekt zmienia stan, wszystkie obiekty zależne od niego są automatyc
 
 ```typescript
 interface Observer {
-  update(
-    data: string,
-  ): void;
+  update(data: string): void;
 }
 ```
 
@@ -50,9 +48,7 @@ class InputObservable {
   // TODO: Dodaj prywatne pole do przechowywania obserwatorów
   // private observers: Observer[] = [];
 
-  constructor(
-    private inputElement: HTMLInputElement,
-  ) {
+  constructor(private inputElement: HTMLInputElement) {
     // TODO: Nasłuchuj zmian na inputElement
     // this.inputElement.addEventListener('input', () => {
     //   this.notifyObservers(this.getValue());
@@ -60,30 +56,22 @@ class InputObservable {
   }
 
   // TODO: Dodaj metodę subscribe
-  subscribe(
-    observer: Observer,
-  ): void {
+  subscribe(observer: Observer): void {
     // Dodaj obserwatora do listy
   }
 
   // TODO: Dodaj metodę unsubscribe
-  unsubscribe(
-    observer: Observer,
-  ): void {
+  unsubscribe(observer: Observer): void {
     // Usuń obserwatora z listy
   }
 
   // TODO: Dodaj metodę notifyObservers
-  private notifyObservers(
-    data: string,
-  ): void {
+  private notifyObservers(data: string): void {
     // Iteruj przez obserwatorów i wywołaj update() na każdym
   }
 
   getValue(): string {
-    return this
-      .inputElement
-      .value;
+    return this.inputElement.value;
   }
 }
 ```
@@ -92,25 +80,17 @@ class InputObservable {
 
 ```typescript
 class ObserverComponent1 implements Observer {
-  constructor(
-    private element: HTMLElement,
-  ) {}
+  constructor(private element: HTMLElement) {}
 
-  update(
-    data: string,
-  ): void {
+  update(data: string): void {
     // TODO: Zaktualizuj this.element.textContent = data;
   }
 }
 
 class ObserverComponent2 implements Observer {
-  constructor(
-    private element: HTMLElement,
-  ) {}
+  constructor(private element: HTMLElement) {}
 
-  update(
-    data: string,
-  ): void {
+  update(data: string): void {
     // TODO: Zaktualizuj this.element.textContent = data;
   }
 }
@@ -119,16 +99,13 @@ class ObserverComponent2 implements Observer {
 ### Część 4: Inicjalizacja w DOM
 
 ```typescript
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-    // TODO:
-    // 1. Pobierz elementy z DOM
-    // 2. Stwórz instancję InputObservable
-    // 3. Stwórz instancje ObserverComponent1 i ObserverComponent2
-    // 4. Zarejestruj obserwatorów via subscribe()
-  },
-);
+document.addEventListener('DOMContentLoaded', () => {
+  // TODO:
+  // 1. Pobierz elementy z DOM
+  // 2. Stwórz instancję InputObservable
+  // 3. Stwórz instancje ObserverComponent1 i ObserverComponent2
+  // 4. Zarejestruj obserwatorów via subscribe()
+});
 ```
 
 ## ✅ Jak Testować

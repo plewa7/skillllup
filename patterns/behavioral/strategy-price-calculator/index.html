@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Strategy Pattern - Kalkulator z Różnymi Strategiami</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 40px;
+        max-width: 600px;
+        width: 100%;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+        font-size: 28px;
+      }
+
+      .pattern-description {
+        background: #f0f4ff;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        font-size: 14px;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      .input-group {
+        margin-bottom: 25px;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+
+      input[type='number'],
+      select {
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      input[type='number']:focus,
+      select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .strategies-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin: 30px 0;
+      }
+
+      .strategy-card {
+        padding: 20px;
+        background: #f9f9f9;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .strategy-card:hover {
+        border-color: #667eea;
+        background: #f5f5ff;
+      }
+
+      .strategy-card.active {
+        background: #e8f5e9;
+        border-color: #4caf50;
+        box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+      }
+
+      .strategy-name {
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 8px;
+        font-size: 16px;
+      }
+
+      .strategy-description {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 10px;
+      }
+
+      .strategy-formula {
+        font-family: 'Courier New', monospace;
+        background: white;
+        padding: 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        color: #667eea;
+      }
+
+      .result-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 30px;
+        border-radius: 12px;
+        color: white;
+        margin-top: 30px;
+        text-align: center;
+      }
+
+      .result-label {
+        font-size: 14px;
+        opacity: 0.9;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .result-value {
+        font-size: 48px;
+        font-weight: 700;
+        font-family: 'Courier New', monospace;
+      }
+
+      .result-breakdown {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        font-size: 13px;
+        opacity: 0.9;
+      }
+
+      .info-box {
+        background: #fff3cd;
+        border: 1px solid #ffc107;
+        padding: 12px;
+        border-radius: 6px;
+        margin-top: 20px;
+        font-size: 13px;
+        color: #856404;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 600px) {
+        .strategies-grid {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+
+        .result-value {
+          font-size: 36px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>💰 Strategy Pattern - Kalkulator</h1>
+
+      <div class="pattern-description">
+        <strong>Wzorzec Strategy:</strong>
+        Encapsulates a set of algorithms, makes them interchangeable. Pozwala na zmianę algorytmu
+        (strategii) w runtime'ie bez zmiany kodu klienta.
+      </div>
+
+      <div class="input-group">
+        <label for="basePrice">📝 Cena bazowa (PLN):</label>
+        <input
+          type="number"
+          id="basePrice"
+          value="100"
+          min="0"
+          step="10"
+          data-testid="base-price-input"
+        />
+      </div>
+
+      <div class="input-group">
+        <label>🎯 Wybierz strategię obliczania:</label>
+        <div class="strategies-grid">
+          <div class="strategy-card active" data-strategy="regular" data-testid="strategy-regular">
+            <div class="strategy-name">Zwykła Cena</div>
+            <div class="strategy-description">Bez zmian</div>
+            <div class="strategy-formula">cena = X</div>
+          </div>
+
+          <div class="strategy-card" data-strategy="discount" data-testid="strategy-discount">
+            <div class="strategy-name">Ze Zniżką 20%</div>
+            <div class="strategy-description">Rabat standardowy</div>
+            <div class="strategy-formula">cena = X × 0.8</div>
+          </div>
+
+          <div class="strategy-card" data-strategy="tax" data-testid="strategy-tax">
+            <div class="strategy-name">Z VAT 23%</div>
+            <div class="strategy-description">Podatek dodany</div>
+            <div class="strategy-formula">cena = X × 1.23</div>
+          </div>
+
+          <div class="strategy-card" data-strategy="premium" data-testid="strategy-premium">
+            <div class="strategy-name">Premium +50%</div>
+            <div class="strategy-description">Dla VIP klientów</div>
+            <div class="strategy-formula">cena = X × 1.5</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-section">
+        <div class="result-label">Wynik Obliczeń</div>
+        <div class="result-value" data-testid="result-value">100,00 zł</div>
+        <div class="result-breakdown" data-testid="result-breakdown">
+          Strategia:
+          <strong data-testid="current-strategy">Zwykła Cena</strong>
+        </div>
+      </div>
+
+      <div class="info-box">
+        ℹ️ Zmień cenę lub kliknij na inną strategię → wynik się aktualizuje dynamicznie. Każda
+        strategia oblicza cenę w inny sposób!
+      </div>
+    </div>
+
+    <script type="module" src="./solution.ts"></script>
+  </body>
+</html>

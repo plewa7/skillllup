@@ -9,11 +9,14 @@
     "preview": "vite preview",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
-    "test:debug": "playwright test --debug"
+    "test:debug": "playwright test --debug",
+    "format": "prettier --write \"**/*.{ts,tsx,html,css,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,html,css,json,md}\""
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0",
     "@vitejs/plugin-basic-ssl": "^1.0.1",
+    "prettier": "^3.1.0",
     "typescript": "^5.3.3",
     "vite": "^5.0.8"
   }
