@@ -65,7 +65,9 @@ interface Organizational {
 
 ```typescript
 class Employee implements Organizational {
-  getAnnualBudget(): number { return this.salary; }
+  getAnnualBudget(): number {
+    return this.salary;
+  }
 }
 ```
 
@@ -118,7 +120,9 @@ class Employee implements OrganizationComponent {
 ```typescript
 class Department implements OrganizationComponent {
   private members: OrganizationComponent[] = [];
-  add(member) { this.members.push(member); }
+  add(member) {
+    this.members.push(member);
+  }
   getBudget(): number {
     return this.members.reduce((sum, m) => sum + m.getBudget(), 0);
   }

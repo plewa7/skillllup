@@ -194,9 +194,7 @@ const debugHandler = new DebugHandler();
 const errorHandler = new ErrorHandler();
 
 // Zbuduj łańcuch
-infoHandler
-  .setNext(debugHandler)
-  .setNext(errorHandler);
+infoHandler.setNext(debugHandler).setNext(errorHandler);
 
 // Użyj
 infoHandler.handle({ level: 'DEBUG', message: 'Start' });

@@ -46,7 +46,7 @@ Z Memento:
 // Musisz śledzić wszystko! 😱
 const history: string[] = [];
 history.push(editor.getContent());
-editor.setContent("New text");
+editor.setContent('New text');
 // history.pop() to cofnięcie
 ```
 
@@ -55,7 +55,7 @@ editor.setContent("New text");
 ```typescript
 // Memento enkapsuluje stan! ✨
 const memento = editor.createMemento();
-editor.setContent("New");
+editor.setContent('New');
 editor.restoreMemento(memento);
 ```
 
@@ -129,8 +129,12 @@ class Editor {
 ```typescript
 class EditorHistory {
   private mementos: Memento[] = [];
-  save(m: Memento) { this.mementos.push(m); }
-  undo(): Memento { return this.mementos.pop(); }
+  save(m: Memento) {
+    this.mementos.push(m);
+  }
+  undo(): Memento {
+    return this.mementos.pop();
+  }
 }
 ```
 
@@ -142,10 +146,10 @@ class EditorHistory {
 const editor = new TextEditor();
 const history = new EditorHistory();
 
-editor.setContent("First");
+editor.setContent('First');
 history.save(editor.createMemento());
 
-editor.setContent("Second");
+editor.setContent('Second');
 editor.restoreMemento(history.undo());
 // content = "First"
 ```

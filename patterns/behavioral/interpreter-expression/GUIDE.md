@@ -53,7 +53,7 @@ else if (expr === '5 * 3') result = 15;
 ```typescript
 // Uniwersalny parser! ✨
 const parser = new ExpressionParser();
-const tree = parser.parse("5 + 3 * 4");
+const tree = parser.parse('5 + 3 * 4');
 const result = tree.interpret(); // = 17
 ```
 
@@ -88,14 +88,20 @@ Węzły wewnętrzne (operacje):
 
 ```typescript
 class Add implements Expression {
-  constructor(private left: Expression, private right: Expression) {}
+  constructor(
+    private left: Expression,
+    private right: Expression
+  ) {}
   interpret(): number {
     return this.left.interpret() + this.right.interpret();
   }
 }
 
 class Multiply implements Expression {
-  constructor(private left: Expression, private right: Expression) {}
+  constructor(
+    private left: Expression,
+    private right: Expression
+  ) {}
   interpret(): number {
     return this.left.interpret() * this.right.interpret();
   }
@@ -140,7 +146,9 @@ interface Expression {
 
 ```typescript
 class NumberExpression implements Expression {
-  interpret(): number { return this.value; }
+  interpret(): number {
+    return this.value;
+  }
 }
 
 class AddExpression implements Expression {
@@ -170,7 +178,7 @@ class Parser {
 
 ```typescript
 const parser = new Parser();
-const expr = parser.parse("2 + 3 * 4");
+const expr = parser.parse('2 + 3 * 4');
 const result = expr.interpret(); // 14
 ```
 
