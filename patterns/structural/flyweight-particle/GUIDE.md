@@ -38,8 +38,14 @@ Z Flyweight:
 const particles = new Array(1000000);
 for (let i = 0; i < 1000000; i++) {
   particles[i] = {
-    x, y, vx, vy, lifetime,
-    texture, color, size // Duplikat!
+    x,
+    y,
+    vx,
+    vy,
+    lifetime,
+    texture,
+    color,
+    size, // Duplikat!
   };
 }
 ```
@@ -48,9 +54,9 @@ for (let i = 0; i < 1000000; i++) {
 
 ```typescript
 // Dziel state! ✨
-const particleType = {text, color, size};
+const particleType = { text, color, size };
 for (let i = 0; i < 1000000; i++) {
-  particles[i] = {x, y, vx, vy, lifetime, type: particleType};
+  particles[i] = { x, y, vx, vy, lifetime, type: particleType };
 }
 ```
 

@@ -75,6 +75,26 @@
         transform: translateX(5px);
       }
 
+      .pattern-link.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background: #f5f5f5;
+        border-color: #ddd;
+      }
+
+      .pattern-link.disabled:hover {
+        background: #f5f5f5;
+        color: #999;
+        border-color: #ddd;
+        transform: none;
+      }
+
+      .pattern-link.disabled::after {
+        content: ' (w realizacji)';
+        font-size: 12px;
+        color: #999;
+      }
+
       .category {
         margin-top: 20px;
       }
@@ -146,6 +166,27 @@
           <a href="/patterns/behavioral/command-calculator/index.html" class="pattern-link"
             >📜 Command - Kalkulator z Historią</a
           >
+          <a href="/patterns/behavioral/chain-of-responsibility-logger/index.html" class="pattern-link disabled"
+            >🔗 Chain of Responsibility - Logger</a
+          >
+          <a href="/patterns/behavioral/interpreter-expression/index.html" class="pattern-link disabled"
+            >🔤 Interpreter - Wyrażenia</a
+          >
+          <a href="/patterns/behavioral/iterator-gallery/index.html" class="pattern-link disabled"
+            >📊 Iterator - Galeria</a
+          >
+          <a href="/patterns/behavioral/mediator-chat/index.html" class="pattern-link disabled"
+            >💬 Mediator - System Czatu</a
+          >
+          <a href="/patterns/behavioral/memento-text-editor/index.html" class="pattern-link disabled"
+            >💾 Memento - Edytor Tekstu</a
+          >
+          <a href="/patterns/behavioral/template-method-report/index.html" class="pattern-link disabled"
+            >📋 Template Method - Raporty</a
+          >
+          <a href="/patterns/behavioral/visitor-shape-analyzer/index.html" class="pattern-link disabled"
+            >👁️ Visitor - Analiza Kształtów</a
+          >
         </div>
 
         <div class="category">
@@ -155,6 +196,21 @@
           >
           <a href="/patterns/structural/data-converter-adapter/index.html" class="pattern-link"
             >🔄 Adapter - Konwerter Danych</a
+          >
+          <a href="/patterns/structural/bridge-device-driver/index.html" class="pattern-link disabled"
+            >🌉 Bridge - Device Driver</a
+          >
+          <a href="/patterns/structural/composite-organization/index.html" class="pattern-link disabled"
+            >🌳 Composite - Organizacja</a
+          >
+          <a href="/patterns/structural/facade-smart-home/index.html" class="pattern-link disabled"
+            >🏠 Facade - Smart Home</a
+          >
+          <a href="/patterns/structural/flyweight-particle/index.html" class="pattern-link disabled"
+            >🎯 Flyweight - Particle System</a
+          >
+          <a href="/patterns/structural/proxy-lazy-image/index.html" class="pattern-link disabled"
+            >🔒 Proxy - Lazy Loading</a
           >
         </div>
 
@@ -168,6 +224,12 @@
           >
           <a href="/patterns/creational/form-builder/index.html" class="pattern-link"
             >🏗️ Builder - Konstruktor Formularzy</a
+          >
+          <a href="/patterns/creational/abstract-factory-ui/index.html" class="pattern-link disabled"
+            >🔧 Abstract Factory - UI Themes</a
+          >
+          <a href="/patterns/creational/prototype-clone/index.html" class="pattern-link disabled"
+            >🔬 Prototype - Clone Obiektu</a
           >
         </div>
       </div>

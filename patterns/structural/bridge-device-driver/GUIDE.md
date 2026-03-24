@@ -34,8 +34,8 @@ Z Bridge: 3+3 = 6 klas!
 
 ```typescript
 // Kombinatoryczna explozja! 😱
-PhoneTV, PhoneRadio, PhoneAC
-RemoteTV, RemoteRadio, RemoteAC
+(PhoneTV, PhoneRadio, PhoneAC);
+(RemoteTV, RemoteRadio, RemoteAC);
 ```
 
 **Rozwiązanie z Bridge:**
@@ -54,8 +54,12 @@ class Radio implements Device { on() {...} }
 ```typescript
 class Remote {
   protected device: Device;
-  constructor(device: Device) { this.device = device; }
-  turnOn(): void { this.device.on(); }
+  constructor(device: Device) {
+    this.device = device;
+  }
+  turnOn(): void {
+    this.device.on();
+  }
 }
 ```
 
@@ -73,13 +77,21 @@ interface Device {
 
 ```typescript
 class TV implements Device {
-  on(): void { console.log('TV on'); }
-  off(): void { console.log('TV off'); }
+  on(): void {
+    console.log('TV on');
+  }
+  off(): void {
+    console.log('TV off');
+  }
 }
 
 class Radio implements Device {
-  on(): void { console.log('Radio on'); }
-  off(): void { console.log('Radio off'); }
+  on(): void {
+    console.log('Radio on');
+  }
+  off(): void {
+    console.log('Radio off');
+  }
 }
 ```
 
@@ -121,7 +133,9 @@ abstract class Remote {
 
 ```typescript
 class BasicRemote extends Remote {
-  operation(): void { this.device.on(); }
+  operation(): void {
+    this.device.on();
+  }
 }
 ```
 

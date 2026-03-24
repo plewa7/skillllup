@@ -91,15 +91,27 @@ abstract class Algorithm {
 
 ```typescript
 class ConcreteAlgorithmA extends Algorithm {
-  step1(): void { /* impl A */ }
-  step2(): void { /* impl A */ }
-  step3(): void { /* impl A */ }
+  step1(): void {
+    /* impl A */
+  }
+  step2(): void {
+    /* impl A */
+  }
+  step3(): void {
+    /* impl A */
+  }
 }
 
 class ConcreteAlgorithmB extends Algorithm {
-  step1(): void { /* impl B */ }
-  step2(): void { /* impl B */ }
-  step3(): void { /* impl B */ }
+  step1(): void {
+    /* impl B */
+  }
+  step2(): void {
+    /* impl B */
+  }
+  step3(): void {
+    /* impl B */
+  }
 }
 ```
 
@@ -124,9 +136,15 @@ abstract class ReportGenerator {
 
 ```typescript
 class HTMLReport extends ReportGenerator {
-  protected header(): string { return '<html>'; }
-  protected body(): string { return '<body>'; }
-  protected footer(): string { return '</html>'; }
+  protected header(): string {
+    return '<html>';
+  }
+  protected body(): string {
+    return '<body>';
+  }
+  protected footer(): string {
+    return '</html>';
+  }
 }
 ```
 

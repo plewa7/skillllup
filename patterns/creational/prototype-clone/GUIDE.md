@@ -91,12 +91,14 @@ class PrototypeRegistry {
 ## Typy Klonowania
 
 ### Shallow Copy (Płytka kopia)
+
 ```typescript
 // Only top level
-const copy = {...original};
+const copy = { ...original };
 ```
 
 ### Deep Copy (Głęboką kopia)
+
 ```typescript
 // Rekursywnie kopij zagnieżdżone obiekty
 const copy = JSON.parse(JSON.stringify(original));
@@ -169,12 +171,14 @@ clone.setTitle('Clone');
 ## Porównanie: New vs Clone
 
 ### New (od zera)
+
 ```typescript
 const doc = new Document('Title', 'Author', 'Content');
 // Wszystko musi być initialized
 ```
 
 ### Clone (z szablonu)
+
 ```typescript
 const doc = template.clone();
 doc.setTitle('New Title');

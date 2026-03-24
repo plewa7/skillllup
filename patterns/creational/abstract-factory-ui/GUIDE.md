@@ -65,33 +65,51 @@ interface ThemeFactory {
 
 ```typescript
 class LightThemeFactory implements ThemeFactory {
-  createButton(): Button { return new LightButton(); }
-  createInput(): Input { return new LightInput(); }
+  createButton(): Button {
+    return new LightButton();
+  }
+  createInput(): Input {
+    return new LightInput();
+  }
 }
 
 class DarkThemeFactory implements ThemeFactory {
-  createButton(): Button { return new DarkButton(); }
-  createInput(): Input { return new DarkInput(); }
+  createButton(): Button {
+    return new DarkButton();
+  }
+  createInput(): Input {
+    return new DarkInput();
+  }
 }
 ```
 
 ### 3. **Abstract Products**
 
 ```typescript
-interface Button { render(): void; }
-interface Input { render(): void; }
-interface Label { render(): void; }
+interface Button {
+  render(): void;
+}
+interface Input {
+  render(): void;
+}
+interface Label {
+  render(): void;
+}
 ```
 
 ### 4. **Concrete Products**
 
 ```typescript
 class LightButton implements Button {
-  render(): void { console.log('Light button'); }
+  render(): void {
+    console.log('Light button');
+  }
 }
 
 class DarkButton implements Button {
-  render(): void { console.log('Dark button'); }
+  render(): void {
+    console.log('Dark button');
+  }
 }
 ```
 
@@ -157,12 +175,14 @@ const button = factory.createButton();
 ## Porównanie: Factory vs Abstract Factory
 
 ### Factory
+
 ```typescript
 // Single product
 const button = ButtonFactory.create('light');
 ```
 
 ### Abstract Factory
+
 ```typescript
 // Família of products
 const factory = ThemeFactory.get('light');

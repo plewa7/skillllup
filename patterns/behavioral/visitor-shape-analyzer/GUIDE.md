@@ -116,7 +116,9 @@ interface Visitor {
 
 ```typescript
 class Circle implements Shape {
-  accept(v: Visitor): void { v.visitCircle(this); }
+  accept(v: Visitor): void {
+    v.visitCircle(this);
+  }
   constructor(public radius: number) {}
 }
 ```

@@ -87,7 +87,10 @@ class ChatRoomImpl implements ChatRoom {
 
 ```typescript
 class ChatUser implements User {
-  constructor(private chatRoom: ChatRoom, private name: string) {}
+  constructor(
+    private chatRoom: ChatRoom,
+    private name: string
+  ) {}
 
   send(message: string): void {
     this.chatRoom.sendMessage(this, message);
