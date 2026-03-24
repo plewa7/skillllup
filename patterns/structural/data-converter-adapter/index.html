@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🔄 Adapter - Konwerter Danych</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+        max-width: 1000px;
+        width: 100%;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 28px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .subtitle {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+
+      .pattern-description {
+        background: #fff4e0;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        font-size: 14px;
+        color: #8b6914;
+        line-height: 1.6;
+        border-left: 4px solid #fa709a;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+        margin-bottom: 25px;
+      }
+
+      .section-title {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 12px;
+        font-size: 16px;
+        border-bottom: 2px solid #fa709a;
+        padding-bottom: 8px;
+      }
+
+      .format-selector {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        background: white;
+        cursor: pointer;
+        transition: border-color 0.3s ease;
+      }
+
+      select:focus {
+        outline: none;
+        border-color: #fa709a;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 200px;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+        font-size: 13px;
+        resize: vertical;
+        transition: border-color 0.3s ease;
+      }
+
+      textarea:focus {
+        outline: none;
+        border-color: #fa709a;
+      }
+
+      textarea:disabled {
+        background: #f5f5f5;
+        color: #999;
+        cursor: not-allowed;
+      }
+
+      .button-group {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+
+      button {
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        color: white;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(250, 112, 154, 0.3);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .convert-btn {
+        grid-column: span 3;
+        font-size: 14px;
+        padding: 12px;
+      }
+
+      .clear-btn {
+        grid-column: span 3;
+        background: #ccc;
+      }
+
+      .clear-btn:hover {
+        background: #999;
+      }
+
+      .sample-buttons {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+
+      .sample-btn {
+        padding: 8px;
+        font-size: 12px;
+        background: #e8f5e9;
+        color: #2e7d32;
+        border: 2px solid #4caf50 !important;
+      }
+
+      .sample-btn:hover {
+        background: #4caf50;
+        color: white;
+      }
+
+      .info-box {
+        background: #f0f4ff;
+        padding: 12px;
+        border-radius: 8px;
+        margin-top: 15px;
+        font-size: 13px;
+        color: #0277bd;
+        border-left: 3px solid #2196f3;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .stat {
+        background: #f9f9f9;
+        padding: 12px;
+        border-radius: 6px;
+        text-align: center;
+        border-left: 3px solid #fa709a;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        color: #666;
+        text-transform: uppercase;
+      }
+
+      .stat-value {
+        font-size: 20px;
+        font-weight: bold;
+        color: #333;
+        margin-top: 4px;
+      }
+
+      .error-message {
+        background: #ffebee;
+        color: #c62828;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        display: none;
+        border-left: 3px solid #d32f2f;
+      }
+
+      .success-message {
+        background: #e8f5e9;
+        color: #2e7d32;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        display: none;
+        border-left: 3px solid #4caf50;
+      }
+
+      @media (max-width: 768px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .button-group,
+        .sample-buttons {
+          grid-template-columns: 1fr;
+        }
+
+        .convert-btn,
+        .clear-btn {
+          grid-column: span 1 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔄 Adapter - Konwerter Danych</h1>
+      <p class="subtitle">Konwersja danych między formatami JSON, XML i CSV</p>
+
+      <div class="pattern-description">
+        💡 Wzorzec Adapter pozwala na konwersję między różnymi formatami danych, ukrywając złożoność
+        konwersji za wspólnym interfejsem.
+      </div>
+
+      <div class="error-message" id="errorMsg"></div>
+      <div class="success-message" id="successMsg"></div>
+
+      <div class="grid">
+        <!-- Input Section -->
+        <div>
+          <div class="section-title">📥 Wejście</div>
+
+          <div class="format-selector">
+            <label for="inputFormat">Format wejścia:</label>
+            <select id="inputFormat" data-testid="input-format">
+              <option value="json">JSON</option>
+              <option value="xml">XML</option>
+              <option value="csv">CSV</option>
+            </select>
+          </div>
+
+          <div class="sample-buttons">
+            <button class="sample-btn" id="sampleJsonBtn" data-testid="sample-json">
+              JSON Sample
+            </button>
+            <button class="sample-btn" id="sampleXmlBtn" data-testid="sample-xml">
+              XML Sample
+            </button>
+            <button class="sample-btn" id="sampleCsvBtn" data-testid="sample-csv">
+              CSV Sample
+            </button>
+          </div>
+
+          <textarea
+            id="dataInput"
+            data-testid="data-input"
+            placeholder="Wklej lub wpisz dane tutaj..."
+          ></textarea>
+
+          <div class="info-box" id="inputInfo">
+            Wybierz format i wklej dane. Następnie kliknij 'Konwertuj'
+          </div>
+        </div>
+
+        <!-- Output Section -->
+        <div>
+          <div class="section-title">📤 Wyjście</div>
+
+          <div class="format-selector">
+            <label for="outputFormat">Format wyjścia:</label>
+            <select id="outputFormat" data-testid="output-format">
+              <option value="json">JSON</option>
+              <option value="xml">XML</option>
+              <option value="csv">CSV</option>
+            </select>
+          </div>
+
+          <textarea
+            id="dataOutput"
+            data-testid="data-output"
+            readonly
+            placeholder="Wynik konwersji pojawi się tutaj..."
+          ></textarea>
+
+          <div class="info-box" id="outputInfo">Dane zostaną skonwertowane tutaj</div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button id="convertBtn" class="convert-btn" data-testid="convert-btn">🔄 Konwertuj</button>
+        <button id="copyBtn" data-testid="copy-btn">📋 Kopiuj</button>
+        <button id="clearBtn" class="clear-btn" data-testid="clear-btn">🗑️ Wyczyść</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Konwersji:</div>
+          <div class="stat-value" id="conversionCount" data-testid="conversion-count">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Adapter:</div>
+          <div class="stat-value" id="adapterUsed" data-testid="adapter-used">-</div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./solution.ts"></script>
+  </body>
+</html>

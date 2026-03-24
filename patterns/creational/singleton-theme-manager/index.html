@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎨 Singleton - Menedżer Motywu</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        transition:
+          background 0.3s ease,
+          color 0.3s ease;
+        padding: 20px;
+        min-height: 100vh;
+      }
+
+      body.light-theme {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+      }
+
+      body.dark-theme {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        color: #e0e0e0;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      header {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+
+      .light-theme header {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+      }
+
+      .dark-theme header {
+        background: rgba(255, 255, 255, 0.05);
+        color: #e0e0e0;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+      }
+
+      .controls {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+
+      button {
+        padding: 12px 24px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+      }
+
+      .light-theme button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .light-theme button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .dark-theme button {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        color: white;
+      }
+
+      .dark-theme button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(255, 255, 255, 0.1);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        padding: 20px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .light-theme .stat-card {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+      }
+
+      .dark-theme .stat-card {
+        background: rgba(255, 255, 255, 0.05);
+        color: #e0e0e0;
+      }
+
+      .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-bottom: 8px;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+
+      .sections {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .themed-section {
+        padding: 25px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .light-theme .themed-section {
+        background: rgba(255, 255, 255, 0.15);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        color: white;
+      }
+
+      .dark-theme .themed-section {
+        background: rgba(255, 255, 255, 0.08);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        color: #e0e0e0;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+        font-weight: 600;
+      }
+
+      .section-text {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        opacity: 0.9;
+      }
+
+      .info-box {
+        background: rgba(255, 255, 255, 0.15);
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border-left: 4px solid;
+      }
+
+      .light-theme .info-box {
+        background: rgba(255, 255, 255, 0.15);
+        border-left-color: white;
+        color: white;
+      }
+
+      .dark-theme .info-box {
+        background: rgba(255, 255, 255, 0.08);
+        border-left-color: #764ba2;
+        color: #e0e0e0;
+      }
+
+      .info-title {
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+      }
+
+      .info-text {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        opacity: 0.9;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        .controls {
+          flex-direction: column;
+        }
+
+        button {
+          width: 100%;
+        }
+
+        .sections {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body class="light-theme">
+    <div class="container">
+      <header>
+        <h1>🎨 Singleton - Menedżer Motywu</h1>
+        <p class="subtitle">Zarządzanie motywem aplikacji z gwarantowaną jedną instancją</p>
+      </header>
+
+      <div class="controls">
+        <button id="themeToggle" data-testid="theme-toggle">
+          <span id="toggleIcon">🌙</span> Przełącz motyw
+        </button>
+        <button id="resetBtn" data-testid="reset-button">🔄 Resetuj do domyślnego</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-label">📊 Obecny motyw:</div>
+          <div class="stat-value" data-testid="current-theme" id="currentTheme">Light</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">📈 Liczba instancji:</div>
+          <div class="stat-value" data-testid="instance-count" id="instanceCount">1</div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <div class="info-title">💡 O wzorcu Singleton</div>
+        <div class="info-text">
+          Wzorzec Singleton gwarantuje, że klasa ma dokładnie jedną instancję i zapewnia globalny
+          punkt dostępu do niej. W tym przykładzie menedżer motywu jest singletonem - bez względu na
+          to, ile razy go pobieramy, zawsze otrzymujemy tę samą instancję.
+        </div>
+      </div>
+
+      <div class="sections">
+        <div class="themed-section">
+          <div class="section-title">🎯 Sekcja 1</div>
+          <div class="section-text">
+            Ta sekcja demonstruje, jak centralnie zarządzany motyw aplikuje się do wszystkich
+            elementów na stronie.
+          </div>
+        </div>
+        <div class="themed-section">
+          <div class="section-title">🔒 Singleton Pattern</div>
+          <div class="section-text">
+            Istnieje tylko jedna instancja ThemeManager, co gwarantuje spójny stan motywu w całej
+            aplikacji.
+          </div>
+        </div>
+        <div class="themed-section">
+          <div class="section-title">⚡ Zalety</div>
+          <div class="section-text">
+            Łatwa zarządzanie stanem globalnym, wydajnych i bezpieczeństwo poprzez kontrolę dostępu
+            do instancji.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./solution.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🏗️ Builder - Konstruktor Formularzy</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 25px;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 8px;
+        font-size: 26px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .subtitle {
+        color: #666;
+        font-size: 13px;
+        margin-bottom: 15px;
+      }
+
+      .pattern-description {
+        background: #f0e6ff;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 13px;
+        color: #4a148c;
+        line-height: 1.5;
+        border-left: 4px solid #667eea;
+      }
+
+      .section-title {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 12px;
+        font-size: 15px;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 8px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 6px;
+        font-size: 13px;
+      }
+
+      input[type='text'],
+      select {
+        width: 100%;
+        padding: 8px 10px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 13px;
+        transition: border-color 0.3s ease;
+      }
+
+      input[type='text']:focus,
+      select:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .button-group {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+
+      button {
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 12px rgba(102, 126, 234, 0.3);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .field-type-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .field-type-buttons button {
+        font-size: 11px;
+        padding: 8px;
+      }
+
+      .fields-list {
+        background: #f9f9f9;
+        border: 2px dashed #ddd;
+        border-radius: 8px;
+        padding: 12px;
+        min-height: 100px;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .field-item {
+        background: white;
+        padding: 10px;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        border-left: 3px solid #667eea;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+      }
+
+      .field-item-info {
+        flex: 1;
+      }
+
+      .field-item-name {
+        font-weight: bold;
+        color: #333;
+      }
+
+      .field-item-type {
+        font-size: 11px;
+        color: #999;
+      }
+
+      .field-item-required {
+        font-size: 10px;
+        background: #ffecb3;
+        padding: 2px 6px;
+        border-radius: 3px;
+        color: #f57f17;
+      }
+
+      .remove-btn {
+        background: #ff5252;
+        padding: 5px 10px;
+        font-size: 10px;
+        border: none;
+      }
+
+      .remove-btn:hover {
+        background: #ff1744;
+      }
+
+      .preview-section {
+        background: #f9f9f9;
+        border: 2px dashed #667eea;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        min-height: 150px;
+      }
+
+      .preview-form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .preview-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .preview-field label {
+        font-size: 12px;
+        margin-bottom: 0;
+        color: #555;
+      }
+
+      .preview-field input,
+      .preview-field select,
+      .preview-field textarea {
+        padding: 6px 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+
+      .preview-field.required label::after {
+        content: ' *';
+        color: #ff5252;
+      }
+
+      .json-section {
+        margin-top: 20px;
+      }
+
+      .json-output {
+        background: #263238;
+        color: #aed581;
+        padding: 12px;
+        border-radius: 6px;
+        font-family: 'Courier New', monospace;
+        font-size: 11px;
+        max-height: 200px;
+        overflow-y: auto;
+        margin-bottom: 10px;
+      }
+
+      .action-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .copy-btn {
+        background: #4caf50;
+      }
+
+      .copy-btn:hover {
+        background: #45a049;
+      }
+
+      .reset-btn {
+        background: #f44336;
+      }
+
+      .reset-btn:hover {
+        background: #da190b;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 15px;
+        font-size: 12px;
+      }
+
+      .stat {
+        background: #f0e6ff;
+        padding: 10px;
+        border-radius: 6px;
+        text-align: center;
+        border-left: 3px solid #667eea;
+      }
+
+      .stat-label {
+        font-size: 10px;
+        color: #666;
+        text-transform: uppercase;
+      }
+
+      .stat-value {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        margin-top: 4px;
+      }
+
+      .empty-state {
+        color: #999;
+        text-align: center;
+        padding: 30px 10px;
+        font-style: italic;
+      }
+
+      @media (max-width: 900px) {
+        .container {
+          grid-template-columns: 1fr;
+        }
+
+        .field-type-buttons,
+        .button-group,
+        .action-buttons {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Builder Section -->
+      <div class="card">
+        <h1>🏗️ Konstruktor</h1>
+        <p class="subtitle">Buduj formularz krok po kroku</p>
+
+        <div class="pattern-description">
+          💡 Wzorzec Builder pozwala na step-by-step konstruowanie złożonych obiektów za pomocą
+          fluent interface'u
+        </div>
+
+        <div class="form-group">
+          <label for="formName">Nazwa formularza:</label>
+          <input
+            type="text"
+            id="formName"
+            data-testid="form-name"
+            placeholder="np. Rejestracja użytkownika"
+            value="Mój formularz"
+          />
+        </div>
+
+        <div class="section-title">📋 Dodaj pola</div>
+        <div class="field-type-buttons">
+          <button id="addTextBtn" data-testid="add-text">📝 Text</button>
+          <button id="addEmailBtn" data-testid="add-email">✉️ Email</button>
+          <button id="addNumberBtn" data-testid="add-number">🔢 Number</button>
+          <button id="addSelectBtn" data-testid="add-select">📌 Select</button>
+          <button id="addCheckboxBtn" data-testid="add-checkbox">☑️ Checkbox</button>
+          <button id="addTextareaBtn" data-testid="add-textarea">📄 Textarea</button>
+        </div>
+
+        <div class="section-title" style="margin-top: 20px">📚 Pola formularza</div>
+        <div class="fields-list" id="fieldsList" data-testid="fields-list">
+          <div class="empty-state">Brak pól - rozpocznij dodawaniem!</div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-label">Pola:</div>
+            <div class="stat-value" id="fieldCount" data-testid="field-count">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Wymagane:</div>
+            <div class="stat-value" id="requiredCount" data-testid="required-count">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Builtów:</div>
+            <div class="stat-value" id="buildCount" data-testid="build-count">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview & JSON Section -->
+      <div class="card">
+        <h1>👀 Podgląd</h1>
+        <p class="subtitle">Wygenerowany formularz</p>
+
+        <div class="preview-section" id="preview" data-testid="preview">
+          <div class="empty-state">Podgląd formularza pojawi się tutaj</div>
+        </div>
+
+        <div class="json-section">
+          <div class="section-title">📋 JSON (export)</div>
+          <div class="json-output" id="jsonOutput" data-testid="json-output">{}</div>
+
+          <div class="action-buttons">
+            <button id="copyBtn" class="copy-btn" data-testid="copy-btn">📋 Kopiuj JSON</button>
+            <button id="resetBtn" class="reset-btn" data-testid="reset-btn">🔄 Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./solution.ts"></script>
+  </body>
+</html>

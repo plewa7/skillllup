@@ -32,54 +32,66 @@ interface TrafficLightState {
 class RedLightState implements TrafficLightState {
   handle(): TrafficLightState {
     // ZAIMPLEMENTUJ: Zwróć następny stan (żółty)
+    return new YellowLightState();
   }
 
   getColor(): string {
     // ZAIMPLEMENTUJ
+    return 'red';
   }
 
   getText(): string {
     // ZAIMPLEMENTUJ
+    return 'STOP';
   }
 
   getDuration(): number {
     // ZAIMPLEMENTUJ: Czerwone świda się 5 sekund
+    return 5;
   }
 }
 
 class YellowLightState implements TrafficLightState {
   handle(): TrafficLightState {
     // ZAIMPLEMENTUJ: Zwróć następny stan (zielony)
+    return new GreenLightState();
   }
 
   getColor(): string {
     // ZAIMPLEMENTUJ
+    return 'yellow';
   }
 
   getText(): string {
     // ZAIMPLEMENTUJ
+    return 'READY';
   }
 
   getDuration(): number {
     // ZAIMPLEMENTUJ: Żółte świata się 2 sekundy
+    return 2;
   }
 }
 
 class GreenLightState implements TrafficLightState {
   handle(): TrafficLightState {
     // ZAIMPLEMENTUJ: Zwróć następny stan (czerwony)
+    return new RedLightState();
   }
 
   getColor(): string {
     // ZAIMPLEMENTUJ
+    return 'green';
   }
 
   getText(): string {
     // ZAIMPLEMENTUJ
+    return 'GO';
   }
 
   getDuration(): number {
     // ZAIMPLEMENTUJ: Zielone świata się 5 sekund
+    return 5;
   }
 }
 
@@ -88,7 +100,7 @@ class GreenLightState implements TrafficLightState {
 // ============================================
 class TrafficLight {
   // ZAIMPLEMENTUJ: Prywatne pole na obecny stan
-  // private currentState: TrafficLightState;
+  private currentState: TrafficLightState;
 
   constructor(
     private redLight: HTMLElement,
@@ -97,6 +109,8 @@ class TrafficLight {
     private stateDisplay: HTMLElement
   ) {
     // ZAIMPLEMENTUJ: Ustaw domyślny stan (RedLightState)
+    this.currentState = new RedLightState();
+    this.updateUI();
   }
 
   // ZAIMPLEMENTUJ: Metoda changeState
@@ -105,6 +119,8 @@ class TrafficLight {
     // ZAIMPLEMENTUJ:
     // 1. Ustaw nowy stan
     // 2. Zaktualizuj UI
+    this.currentState = state;
+    this.updateUI();
   }
 
   // ZAIMPLEMENTUJ: Metoda nextState
@@ -113,6 +129,8 @@ class TrafficLight {
     // ZAIMPLEMENTUJ:
     // 1. Pobierz następny stan z currentState.handle()
     // 2. Ustaw go via setState()
+    this.currentState = this.currentState.handle();
+    this.updateUI();
   }
 
   // ZAIMPLEMENTUJ: Metoda updateUI
@@ -122,6 +140,24 @@ class TrafficLight {
     // 1. Usuń wszystkie klasy (red, yellow, green) ze wszystkich świateł
     // 2. Dodaj odpowiednią klasę do właściwego światła
     // 3. Zaktualizuj tekst stanu
+    this.redLight.classList.remove('red', 'yellow', 'green');
+    this.yellowLight.classList.remove('red', 'yellow', 'green');
+    this.greenLight.classList.remove('red', 'yellow', 'green');
+
+    const color = this.currentState.getColor();
+    switch (color) {
+      case 'red':
+        this.redLight.classList.add('red');
+        break;
+      case 'yellow':
+        this.yellowLight.classList.add('yellow');
+        break;
+      case 'green':
+        this.greenLight.classList.add('green');
+        break;
+    }
+
+    this.stateDisplay.textContent = this.currentState.getText();
   }
 }
 
@@ -141,4 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. Stwórz instancję TrafficLight
   // 2. Nasłuchuj kliknięcia nextBtn -> trafficLight.nextState()
   // 3. Nasłuchuj kliknięcia resetBtn -> trafficLight.setState(new RedLightState())
+  const trafficLight = new TrafficLight(redLight, yellowLight, greenLight, stateDisplay);
+
+  nextBtn.addEventListener('click', () => trafficLight.nextState());
+  resetBtn.addEventListener('click', () => trafficLight.setState(new RedLightState()));
 });

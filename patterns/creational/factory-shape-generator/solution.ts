@@ -29,57 +29,81 @@ interface Shape {
 class Circle implements Shape {
   getType(): string {
     // ZAIMPLEMENTUJ
+    return 'Circle';
   }
 
   getCssClass(): string {
     // ZAIMPLEMENTUJ: Powinna być 'circle'
+    return 'circle';
   }
 
   render(): HTMLElement {
     // ZAIMPLEMENTUJ: Stwórz i zwróć HTMLElement z klasą CSS
     // Powinien zawierać data-testid="shape-item"
+    const element = document.createElement('div');
+    element.className = 'circle';
+    element.setAttribute('data-testid', 'shape-item');
+    return element;
   }
 }
 
 class Square implements Shape {
   getType(): string {
     // ZAIMPLEMENTUJ
+    return 'Square';
   }
 
   getCssClass(): string {
     // ZAIMPLEMENTUJ: Powinna być 'square'
+    return 'square';
   }
 
   render(): HTMLElement {
     // ZAIMPLEMENTUJ
+    const element = document.createElement('div');
+    element.className = 'square';
+    element.setAttribute('data-testid', 'shape-item');
+    return element;
   }
 }
 
 class Triangle implements Shape {
   getType(): string {
     // ZAIMPLEMENTUJ
+    return 'Triangle';
   }
 
   getCssClass(): string {
     // ZAIMPLEMENTUJ: Powinna być 'triangle'
+    return 'triangle';
   }
 
   render(): HTMLElement {
     // ZAIMPLEMENTUJ
+    const element = document.createElement('div');
+    element.className = 'triangle';
+    element.setAttribute('data-testid', 'shape-item');
+    return element;
   }
 }
 
 class Rectangle implements Shape {
   getType(): string {
     // ZAIMPLEMENTUJ
+    return 'Rectangle';
   }
 
   getCssClass(): string {
     // ZAIMPLEMENTUJ: Powinna być 'rect'
+    return 'rect';
   }
 
   render(): HTMLElement {
     // ZAIMPLEMENTUJ
+    const element = document.createElement('div');
+    element.className = 'rect';
+    element.setAttribute('data-testid', 'shape-item');
+    return element;
   }
 }
 
@@ -98,6 +122,18 @@ class ShapeFactory {
     //   case 'rect': return new Rectangle();
     //   default: throw new Error(`Unknown shape type: ${type}`);
     // }
+    switch (type) {
+      case 'circle':
+        return new Circle();
+      case 'square':
+        return new Square();
+      case 'triangle':
+        return new Triangle();
+      case 'rect':
+        return new Rectangle();
+      default:
+        throw new Error(`Unknown shape type: ${type}`);
+    }
   }
 }
 
@@ -133,6 +169,12 @@ class ShapeManager {
     // 3. Pobrania renderowanie do canvas
     // 4. Zaktualizuj liczniki
     // 5. Zaktualizuj UI
+    const shape = ShapeFactory.create(type);
+    this.shapes.push(shape);
+    this.canvas.appendChild(shape.render());
+
+    this.counts[type as keyof typeof this.counts]++;
+    this.updateUI();
   }
 
   // ZAIMPLEMENTUJ: Wyczyść wszystkie kształty
@@ -142,6 +184,15 @@ class ShapeManager {
     // 2. Wyczyść counts
     // 3. Wyczyść canvas HTML
     // 4. Zaktualizuj UI
+    this.shapes = [];
+    this.counts = {
+      circle: 0,
+      square: 0,
+      triangle: 0,
+      rect: 0,
+    };
+    this.canvas.innerHTML = '';
+    this.updateUI();
   }
 
   // ZAIMPLEMENTUJ: Prywatna metoda do aktualizacji UI liczników
@@ -149,16 +200,24 @@ class ShapeManager {
     // ZAIMPLEMENTUJ:
     // 1. Oblicz totalCount
     // 2. Zaktualizuj textContent elementów z licznikami
+    const totalCount = this.getTotalCount();
+    this.totalCountEl.textContent = totalCount.toString();
+    this.circleCountEl.textContent = this.counts.circle.toString();
+    this.squareCountEl.textContent = this.counts.square.toString();
+    this.triangleCountEl.textContent = this.counts.triangle.toString();
+    this.rectCountEl.textContent = this.counts.rect.toString();
   }
 
   // ZAIMPLEMENTUJ: Getter dla liczby kształtów
   getCount(type: string): number {
     // ZAIMPLEMENTUJ: Zwróć liczbę dla danego typu
+    return this.counts[type as keyof typeof this.counts] || 0;
   }
 
   // ZAIMPLEMENTUJ: Getter dla całkowitej liczby
   getTotalCount(): number {
     // ZAIMPLEMENTUJ: Zwróć sumę wszystkich kształtów
+    return this.shapes.length;
   }
 }
 
@@ -188,4 +247,18 @@ document.addEventListener('DOMContentLoaded', () => {
   //    - triangleBtn -> shapeManager.addShape('triangle')
   //    - rectBtn -> shapeManager.addShape('rect')
   // 3. Nasłuchuj clearBtn -> shapeManager.clear()
+  const shapeManager = new ShapeManager(
+    canvas,
+    totalCountEl,
+    circleCountEl,
+    squareCountEl,
+    triangleCountEl,
+    rectCountEl
+  );
+
+  circleBtn.addEventListener('click', () => shapeManager.addShape('circle'));
+  squareBtn.addEventListener('click', () => shapeManager.addShape('square'));
+  triangleBtn.addEventListener('click', () => shapeManager.addShape('triangle'));
+  rectBtn.addEventListener('click', () => shapeManager.addShape('rect'));
+  clearBtn.addEventListener('click', () => shapeManager.clear());
 });
