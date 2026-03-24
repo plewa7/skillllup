@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📜 Command - Kalkulator z Historią</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        max-width: 1000px;
+        width: 100%;
+      }
+
+      .card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .subtitle {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+
+      .pattern-description {
+        background: #e0f7ff;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 13px;
+        color: #0277bd;
+        line-height: 1.5;
+        border-left: 3px solid #00f2fe;
+      }
+
+      .display {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        font-size: 2.5rem;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: right;
+        margin-bottom: 20px;
+        font-weight: bold;
+        min-height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .buttons-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      button {
+        padding: 15px;
+        font-size: 18px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        background: #f5f5f5;
+        color: #333;
+        border: 2px solid #e0e0e0;
+      }
+
+      button:hover {
+        background: #4facfe;
+        color: white;
+        border-color: #4facfe;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .equals-btn {
+        grid-column: span 2;
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        border: none;
+        font-size: 20px;
+      }
+
+      .equals-btn:hover {
+        background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+      }
+
+      .clear-btn {
+        grid-column: span 2;
+        background: #ff6b6b;
+        color: white;
+        border: none;
+      }
+
+      .clear-btn:hover {
+        background: #ff5252;
+      }
+
+      .undo-redo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .undo-btn,
+      .redo-btn {
+        background: #fff3cd;
+        color: #856404;
+        border: 2px solid #ffc107;
+      }
+
+      .undo-btn:hover,
+      .redo-btn:hover {
+        background: #ffc107;
+        color: white;
+      }
+
+      .undo-btn:disabled,
+      .redo-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      .history-section {
+        margin-top: 20px;
+      }
+
+      .section-title {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 12px;
+        font-size: 16px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #4facfe;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .command-count {
+        font-size: 12px;
+        background: #e0f7ff;
+        padding: 4px 8px;
+        border-radius: 4px;
+        color: #0277bd;
+      }
+
+      #history {
+        background: #f9f9f9;
+        border: 2px dashed #ddd;
+        border-radius: 8px;
+        padding: 12px;
+        min-height: 80px;
+        max-height: 200px;
+        overflow-y: auto;
+        font-size: 13px;
+        font-family: 'Courier New', monospace;
+      }
+
+      .history-item {
+        padding: 6px 8px;
+        margin-bottom: 4px;
+        background: white;
+        border-left: 3px solid #4facfe;
+        border-radius: 3px;
+        color: #333;
+      }
+
+      .history-empty {
+        color: #999;
+        font-style: italic;
+        text-align: center;
+        padding: 20px 0;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .stat {
+        background: #f0f0f0;
+        padding: 10px;
+        border-radius: 6px;
+        text-align: center;
+        border-left: 3px solid #4facfe;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        color: #666;
+        text-transform: uppercase;
+      }
+
+      .stat-value {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin-top: 4px;
+      }
+
+      @media (max-width: 900px) {
+        .container {
+          grid-template-columns: 1fr;
+        }
+
+        .buttons-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .equals-btn,
+        .clear-btn {
+          grid-column: span 3;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Calculator -->
+      <div class="card">
+        <h1>📜 Kalkulator</h1>
+        <p class="subtitle">Z historią i Undo/Redo</p>
+
+        <div class="pattern-description">
+          💡 Wzorzec Command enkapsuluje operacje jako obiekty, pozwalając na Undo/Redo
+        </div>
+
+        <div class="display" id="display" data-testid="display">0</div>
+
+        <div class="undo-redo">
+          <button id="undoBtn" data-testid="undo" class="undo-btn">↶ Undo</button>
+          <button id="redoBtn" data-testid="redo" class="redo-btn">↷ Redo</button>
+        </div>
+
+        <div class="buttons-grid">
+          <button class="numBtn" data-value="7">7</button>
+          <button class="numBtn" data-value="8">8</button>
+          <button class="numBtn" data-value="9">9</button>
+          <button class="opBtn" data-op="/">÷</button>
+
+          <button class="numBtn" data-value="4">4</button>
+          <button class="numBtn" data-value="5">5</button>
+          <button class="numBtn" data-value="6">6</button>
+          <button class="opBtn" data-op="*">×</button>
+
+          <button class="numBtn" data-value="1">1</button>
+          <button class="numBtn" data-value="2">2</button>
+          <button class="numBtn" data-value="3">3</button>
+          <button class="opBtn" data-op="-">−</button>
+
+          <button class="numBtn" data-value="0">0</button>
+          <button class="numBtn" data-value=".">.</button>
+          <button id="equalsBtn" data-testid="equals" class="equals-btn">=</button>
+          <button class="opBtn" data-op="+">+</button>
+
+          <button id="clearBtn" data-testid="clear" class="clear-btn">CLEAR</button>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-label">Operacji:</div>
+            <div class="stat-value" id="operationCount" data-testid="operation-count">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">W historii:</div>
+            <div class="stat-value" id="historySize" data-testid="history-size">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- History -->
+      <div class="card">
+        <div class="section-title">
+          📋 Historia Operacji
+          <span class="command-count" id="commandCount" data-testid="command-count">0 cmd</span>
+        </div>
+
+        <div id="history" data-testid="history" class="history-empty">
+          Historia operacji pokaże się tutaj...
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./solution.ts"></script>
+  </body>
+</html>
