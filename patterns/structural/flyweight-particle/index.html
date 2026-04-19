@@ -5,27 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🎯 Flyweight - Particle</title>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
       body {
-        font-family: sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         min-height: 100vh;
         padding: 20px;
       }
       .container {
-        max-width: 800px;
+        max-width: 1000px;
         margin: 0 auto;
         background: white;
         border-radius: 12px;
         padding: 30px;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
       }
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+      .pattern-description {
+        background: #e1f5fe;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border-left: 4px solid #0277bd;
+        color: #01579b;
+        line-height: 1.6;
+      }
+      canvas {
+        width: 100%;
+        height: 400px;
+        border: 2px solid #0277bd;
+        border-radius: 8px;
+        background: #000;
+        cursor: crosshair;
+        margin-bottom: 20px;
+        display: block;
+      }
+      #stats {
+        background: #e1f5fe;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        color: #0277bd;
+        font-weight: 600;
+      }
+      .info {
+        background: #fff3cd;
+        padding: 12px;
+        border-radius: 8px;
+        margin-top: 20px;
+        border-left: 3px solid #ffc107;
+        color: #856404;
+        font-size: 13px;
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>🎯 Flyweight - Particle System</h1>
-      <p>Wzorzec w realizacji</p>
+      <h1>🎯 Flyweight - System Cząstek</h1>
+      <div class="pattern-description">
+        💡 Flyweight wzorzec - optymalizuje pamięć dzieląc wspólny stan. Kliknij na canvas, aby tworzyć cząstki (miliony bez problemu).
+      </div>
+      <canvas id="particle-canvas"></canvas>
+      <div id="stats"></div>
+      <div class="info">
+        💡 Porusz myszą lub kliknij na canvasem, aby tworzyć cząstki. Flyweight wzorzec optymalizuje pamięć poprzez współdzielenie stanu.
+      </div>
     </div>
     <script type="module" src="./solution.ts"></script>
   </body>
+</html>
 </html>

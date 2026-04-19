@@ -5,41 +5,211 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🔗 Chain of Responsibility - Logger</title>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
         padding: 20px;
       }
+
       .container {
-        max-width: 800px;
+        max-width: 900px;
         margin: 0 auto;
         background: white;
         border-radius: 12px;
         padding: 30px;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
       }
+
       h1 {
         color: #333;
+        margin-bottom: 20px;
+        font-size: 28px;
       }
+
       .pattern-description {
         background: #f0e6ff;
         padding: 15px;
         border-radius: 8px;
         margin: 20px 0;
         border-left: 4px solid #667eea;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      .controls {
+        background: #f5f5f5;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: flex-end;
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      label {
+        font-weight: 600;
+        color: #333;
+        font-size: 14px;
+      }
+
+      select,
+      input {
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        font-family: inherit;
+      }
+
+      select:focus,
+      input:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      #message-input {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 14px;
+      }
+
+      #submit-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      #submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+      }
+
+      #clear-btn {
+        background: #ff6b6b;
+        color: white;
+      }
+
+      #clear-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+      }
+
+      .log-container {
+        background: #1e1e1e;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-top: 20px;
+      }
+
+      #log-list {
+        list-style: none;
+        height: 300px;
+        overflow-y: auto;
+        padding: 15px;
+        background: #1e1e1e;
+        color: #00ff00;
+        font-family: 'Courier New', monospace;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .log-entry {
+        padding: 5px 0;
+        border-bottom: 1px solid #333;
+      }
+
+      .log-entry.info {
+        color: #64b5f6;
+      }
+
+      .log-entry.debug {
+        color: #81c784;
+      }
+
+      .log-entry.warning {
+        color: #ffb74d;
+      }
+
+      .log-entry.error {
+        color: #e57373;
+      }
+
+      .log-entry.critical {
+        color: #ff6b6b;
+        font-weight: bold;
+        background: rgba(255, 107, 107, 0.1);
+        padding: 8px;
+      }
+
+      @media (max-width: 600px) {
+        .controls {
+          flex-direction: column;
+        }
+
+        #message-input {
+          min-width: 100%;
+        }
+
+        button {
+          width: 100%;
+        }
       }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>🔗 Chain of Responsibility - Logger</h1>
-      <p>Wzorzec w realizacji...</p>
       <div class="pattern-description">
-        💡 Chain of Responsibility - przekazywanie żądań wzdłuż łańcucha handler'ów
+        💡 Łańcuch handler'ów, gdzie każdy obsługuje swój poziom logowania. Wiadomości przechodzą
+        przez łańcuch aż do znalezienia odpowiedniego handlera.
       </div>
-      <p>Szczegóły znajdują się w GUIDE.md</p>
+
+      <div class="controls">
+        <div class="control-group">
+          <label for="level-select">Poziom Logowania:</label>
+          <select id="level-select">
+            <option value="INFO">INFO</option>
+            <option value="DEBUG">DEBUG</option>
+            <option value="WARNING">WARNING</option>
+            <option value="ERROR">ERROR</option>
+            <option value="CRITICAL">CRITICAL</option>
+          </select>
+        </div>
+        <div class="control-group" style="flex: 1; min-width: 200px">
+          <label for="message-input">Wiadomość:</label>
+          <input type="text" id="message-input" placeholder="Wpisz wiadomość..." />
+        </div>
+        <button id="submit-btn">Wyślij</button>
+        <button id="clear-btn">Wyczyść Logi</button>
+      </div>
+
+      <div class="log-container">
+        <ul id="log-list"></ul>
+      </div>
     </div>
+
     <script type="module" src="./solution.ts"></script>
   </body>
 </html>
