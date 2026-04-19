@@ -5,26 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>📋 Template Method - Raporty</title>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
       body {
-        font-family: sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         min-height: 100vh;
         padding: 20px;
       }
       .container {
-        max-width: 800px;
+        max-width: 900px;
         margin: 0 auto;
         background: white;
         border-radius: 12px;
         padding: 30px;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
       }
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+      .pattern-description {
+        background: #e1f5fe;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border-left: 4px solid #0277bd;
+        color: #01579b;
+        line-height: 1.6;
+      }
+      .controls {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      button {
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+      }
+      #output {
+        background: #f5f5f5;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 20px;
+        min-height: 300px;
+        max-height: 500px;
+        overflow: auto;
+        font-family: 'Courier New', monospace;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        background: white;
+      }
+      table th,
+      table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+      }
+      table th {
+        background-color: #4caf50;
+        color: white;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>📋 Template Method - Generowanie Raportów</h1>
-      <p>Wzorzec w realizacji</p>
+      <div class="pattern-description">
+        💡 Template Method wzorzec - struktura algorytmu w klasie bazowej, implementacja szczegółów
+        w podklasach. Generuj raporty w różnych formatach.
+      </div>
+      <div class="controls">
+        <button id="html-btn">📄 Raport HTML</button>
+        <button id="csv-btn">📊 Raport CSV</button>
+        <button id="json-btn">🔗 Raport JSON</button>
+      </div>
+      <div id="output"></div>
     </div>
     <script type="module" src="./solution.ts"></script>
   </body>

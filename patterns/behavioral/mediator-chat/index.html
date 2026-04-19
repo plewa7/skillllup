@@ -3,28 +3,158 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>💬 Mediator - Czat</title>
+    <title>💬 Mediator - System Czatu</title>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
       body {
-        font-family: sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
         min-height: 100vh;
         padding: 20px;
       }
       .container {
-        max-width: 800px;
+        max-width: 700px;
         margin: 0 auto;
         background: white;
         border-radius: 12px;
-        padding: 30px;
+        padding: 20px;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        height: 90vh;
+        max-height: 700px;
+      }
+      h1 {
+        color: #333;
+        margin-bottom: 15px;
+        font-size: 24px;
+      }
+      .pattern-description {
+        background: #fff3cd;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        border-left: 4px solid #ffc107;
+        color: #856404;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .controls {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+        align-items: center;
+      }
+      select {
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      #chat-log {
+        flex: 1;
+        overflow-y: auto;
+        background: #f5f5f5;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+      }
+      .system-message {
+        background: #e3f2fd;
+        color: #1976d2;
+        padding: 8px 12px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        font-size: 13px;
+        border-left: 3px solid #1976d2;
+      }
+      .sent-message {
+        text-align: right;
+        margin-bottom: 10px;
+      }
+      .sent-message strong {
+        color: #4caf50;
+      }
+      .sent-message {
+        background: #c8e6c9;
+        color: #1b5e20;
+        padding: 8px 12px;
+        border-radius: 6px;
+        display: inline-block;
+        max-width: 80%;
+        text-align: left;
+        border-left: 3px solid #4caf50;
+      }
+      .received-message {
+        margin-bottom: 10px;
+      }
+      .received-message strong {
+        color: #1976d2;
+      }
+      .received-message {
+        background: #bbdefb;
+        color: #0d47a1;
+        padding: 8px 12px;
+        border-radius: 6px;
+        display: inline-block;
+        max-width: 80%;
+        border-left: 3px solid #1976d2;
+      }
+      .input-group {
+        display: flex;
+        gap: 10px;
+      }
+      input {
+        flex: 1;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      input:focus {
+        outline: none;
+        border-color: #fa709a;
+      }
+      button {
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        color: #333;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(250, 112, 154, 0.3);
       }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>💬 Mediator - System Czatu</h1>
-      <p>Wzorzec w realizacji</p>
+      <div class="pattern-description">
+        💡 Mediator wzorzec do koordynacji komunikacji między użytkownikami. ChatRoom pełni rolę
+        mediatora.
+      </div>
+
+      <div class="controls">
+        <label>Zalogowany jako:</label>
+        <select id="user-select"></select>
+      </div>
+
+      <div id="chat-log"></div>
+
+      <div class="input-group">
+        <input type="text" id="message-input" placeholder="Wpisz wiadomość..." />
+        <button id="send-btn">Wyślij</button>
+      </div>
     </div>
     <script type="module" src="./solution.ts"></script>
   </body>

@@ -5,27 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🏠 Facade - Smart Home</title>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
       body {
-        font-family: sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
         min-height: 100vh;
         padding: 20px;
       }
       .container {
-        max-width: 800px;
+        max-width: 900px;
         margin: 0 auto;
         background: white;
         border-radius: 12px;
         padding: 30px;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
       }
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+      .pattern-description {
+        background: #e0f2f1;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border-left: 4px solid #00897b;
+        color: #00695c;
+        line-height: 1.6;
+      }
+      .controls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      button {
+        padding: 12px 16px;
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        color: #333;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+      }
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      #event-log {
+        background: #f5f5f5;
+        border-radius: 8px;
+        padding: 15px;
+        max-height: 350px;
+        overflow-y: auto;
+      }
+      .event {
+        padding: 10px;
+        margin-bottom: 8px;
+        background: white;
+        border-radius: 4px;
+        border-left: 3px solid #00897b;
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+        animation: slideIn 0.3s ease;
+      }
+      .event.scenario {
+        border-left-color: #f5576c;
+        color: #c2185b;
+      }
+      .event.device {
+        border-left-color: #4facfe;
+        color: #1565c0;
+      }
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      .buttons-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>🏠 Facade - Smart Home</h1>
-      <p>Wzorzec w realizacji</p>
+      <div class="pattern-description">
+        💡 Facade wzorzec - upraszcza interfejs do skomplikowanych podsystemów. Jeden pilot kontroluje wiele urządzeń.
+      </div>
+      <div class="controls buttons-grid">
+        <button id="leave-btn">🚗 Opuść Dom</button>
+        <button id="come-btn">🚪 Przyjdź do Domu</button>
+        <button id="sleep-btn">😴 Tryb Snu</button>
+        <button id="movie-btn">🎬 Tryb Kina</button>
+        <button id="party-btn">🎉 Tryb Imprezy</button>
+        <button id="clear-btn">🗑️ Wyczyść Log</button>
+      </div>
+      <h3>Historia Zdarzeń</h3>
+      <div id="event-log"></div>
     </div>
     <script type="module" src="./solution.ts"></script>
   </body>
+</html>
 </html>
